@@ -11,6 +11,10 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Setup the test environment.
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setUp();
@@ -42,7 +46,7 @@ class LoginTest extends TestCase
         $response->assertUnauthorized();
     }
 
-    public function test_email_required()
+    public function test_email_must_be_required()
     {
         $credentials = [
             'email' => null,
@@ -51,9 +55,23 @@ class LoginTest extends TestCase
         $response = $this->postJson("{$this->apiBase}/login", $credentials);
 
         $response->assertStatus(422);
+        $response->assertJsonStructure(['message', 'errors' => ['email']]);
     }
 
-    public function test_password_required()
+    public function test_email_must_be_valid()
+    {
+        $credentials = [
+            'email' => 'not-an-email',
+            'password' => 'password'
+        ];
+
+        $response = $this->postJson("{$this->apiBase}/login", $credentials);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure(['message', 'errors' => ['email']]);
+    }
+
+    public function test_password_must_be_required()
     {
         $credentials = [
             'email' => 'abraham@mail.com',
@@ -62,5 +80,18 @@ class LoginTest extends TestCase
         $response = $this->postJson("{$this->apiBase}/login", $credentials);
 
         $response->assertStatus(422);
+        $response->assertJsonStructure(['message', 'errors' => ['password']]);
+    }
+
+    public function test_password_must_be_string()
+    {
+        $credentials = [
+            'email' => 'abraham@mail.com',
+            'password' => 123456
+        ];
+        $response = $this->postJson("{$this->apiBase}/login", $credentials);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure(['message', 'errors' => ['password']]);
     }
 }
