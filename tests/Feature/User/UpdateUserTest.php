@@ -24,17 +24,16 @@ class UpdateUserTest extends TestCase
 
     public function test_an_unauthenticated_user_cannot_update_a_user(): void
     {
-        $response = $this->patchJson("$this->apiBase/users", $this->data);
+        $response = $this->patchJson("$this->apiBase/profile", $this->data);
 
         $response->assertUnauthorized();
-
     }
 
     public function test_user_can_be_update_their_data(): void
     {
         $user = User::find(1);
 
-        $response = $this->apiAs($user, 'patch', "$this->apiBase/users", $this->data);
+        $response = $this->apiAs($user, 'patch', "$this->apiBase/profile", $this->data);
 
         $response->assertStatus(204);
         $this->assertDatabaseHas('users', [
@@ -49,7 +48,7 @@ class UpdateUserTest extends TestCase
         $user = User::find(1);
         $data['password'] = 'new-password';
 
-        $response = $this->apiAs($user, 'patch', "$this->apiBase/users", $this->data);
+        $response = $this->apiAs($user, 'patch', "$this->apiBase/profile", $this->data);
 
         $response->assertStatus(204);
         $this->assertFalse(Hash::make($data['password']) === $user->fresh()->password);
@@ -60,7 +59,7 @@ class UpdateUserTest extends TestCase
         $user = User::find(1);
         $data['email'] = 'new-email@mail.com';
 
-        $response = $this->apiAs($user, 'patch', "$this->apiBase/users", $this->data);
+        $response = $this->apiAs($user, 'patch', "$this->apiBase/profile", $this->data);
 
         $response->assertStatus(204);
         $this->assertFalse($user->fresh()->email === $data['email']);
@@ -71,7 +70,7 @@ class UpdateUserTest extends TestCase
         $data['name'] = '';
         $user = User::find(1);
 
-        $response = $this->apiAs($user, 'patch', "$this->apiBase/users", $data);
+        $response = $this->apiAs($user, 'patch', "$this->apiBase/profile", $data);
 
         $response->assertStatus(422);
         $response->assertJsonStructure(['message', 'errors' => ['name']]);
@@ -82,7 +81,7 @@ class UpdateUserTest extends TestCase
         $data['lastName'] = '';
         $user = User::find(1);
 
-        $response = $this->apiAs($user, 'patch', "$this->apiBase/users", $data);
+        $response = $this->apiAs($user, 'patch', "$this->apiBase/profile", $data);
 
         $response->assertStatus(422);
         $response->assertJsonStructure(['message', 'errors' => ['lastName']]);
