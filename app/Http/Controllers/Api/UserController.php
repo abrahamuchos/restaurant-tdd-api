@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -24,7 +26,7 @@ class UserController extends Controller
             'name' => $request->name,
             'last_name' => $request->lastName,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
         ]);
 
         return response()->json([], 201);
@@ -40,6 +42,25 @@ class UserController extends Controller
         $wasUpdated = auth()->user()->update([
             'name' => $request->name,
             'last_name' => $request->lastName,
+        ]);
+
+        if ($wasUpdated) {
+            return response()->json([], 204);
+        } else {
+            return response()->json([], 404);
+        }
+    }
+
+    /**
+     * Change password of authenticated user.
+     * @param UpdatePasswordRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function updatePassword(UpdatePasswordRequest $request): JsonResponse
+    {
+        $wasUpdated = auth()->user()->update([
+            'password' => Hash::make($request->input('newPassword')),
         ]);
 
         if ($wasUpdated) {

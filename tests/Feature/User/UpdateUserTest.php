@@ -51,7 +51,7 @@ class UpdateUserTest extends TestCase
         $response = $this->apiAs($user, 'patch', "$this->apiBase/profile", $this->data);
 
         $response->assertStatus(204);
-        $this->assertFalse(Hash::make($data['password']) === $user->fresh()->password);
+        $this->assertFalse(Hash::check($data['password'], $user->fresh()->password));
     }
 
     public function test_user_cannot_update_their_email(): void
