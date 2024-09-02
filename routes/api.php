@@ -12,6 +12,8 @@ Route::get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [UserController::class, 'store']);
+    Route::post('reset-password', [AuthController::class, 'sendingResetLinkEmail']);
+    Route::patch('reset-password', [AuthController::class, 'resetPassword']);
 
     /** Protected Routes */
     Route::middleware('auth:api')->group(function (){

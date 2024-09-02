@@ -3,23 +3,23 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-
 /**
  *
- * @property int                             $id
- * @property string                          $name
- * @property string                          $last_name
- * @property string                          $email
+ * @property int $id
+ * @property string $name
+ * @property string $last_name
+ * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string|null                     $remember_token
+ * @property string|null $remember_token
  * @property string $password
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int,\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
@@ -75,6 +75,12 @@ class User extends Authenticatable implements JWTSubject
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendPasswordResetNotification(#[\SensitiveParameter] $token): void
+    {
+        $url = env('APP_URL_FRONTEND') . '?token=' . $token . '&email=' . $this->email;
+        $this->notify(new ResetPasswordNotification($url));
     }
 
     /**
