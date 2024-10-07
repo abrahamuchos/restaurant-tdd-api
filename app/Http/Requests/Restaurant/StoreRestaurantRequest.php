@@ -39,7 +39,7 @@ class StoreRestaurantRequest extends FormRequest
         return [
             'userId' => 'required|exists:users,id',
             'code' => 'required|string|max:255|unique:restaurants',
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:65',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:65',
             'email' => 'required|string|email|max:255|unique:restaurants',

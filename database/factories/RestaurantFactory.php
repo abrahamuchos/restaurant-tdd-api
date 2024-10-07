@@ -28,8 +28,8 @@ class RestaurantFactory extends Factory
             'phone' => fake()->phoneNumber,
             'email' => fake()->companyEmail,
             'website' => fake()->url,
-            'openingHour' => fake()->time('H:i:s'),
-            'closingHour' =>  fake()->time('H:i:s'),
+            'opening_hour' => fake()->time('H:i:s'),
+            'closing_hour' =>  fake()->time('H:i:s'),
             'logo' => random_int(0, 1) ? fake()->imageUrl : null,
             'image' => random_int(0, 1) ? fake()->imageUrl : null,
         ];

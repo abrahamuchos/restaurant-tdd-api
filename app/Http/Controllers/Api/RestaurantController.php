@@ -19,9 +19,11 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param StoreRestaurantRequest $request
+     *
+     * @return RestaurantResource
      */
-    public function store(StoreRestaurantRequest $request)
+    public function store(StoreRestaurantRequest $request): RestaurantResource
     {
         $restaurant = Restaurant::create([
             'user_id' => $request->userId,
