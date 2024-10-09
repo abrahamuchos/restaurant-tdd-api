@@ -43,7 +43,7 @@ class StoreRestaurantRequest extends FormRequest
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:65',
             'email' => 'required|string|email|max:255|unique:restaurants',
-            'description' => 'nullable|string|max:255',
+            'description' => 'required|string|max:255',
             'openingHour' => 'required|date_format:H:i',
             'closingHour' => 'required|date_format:H:i|after:openingHour',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

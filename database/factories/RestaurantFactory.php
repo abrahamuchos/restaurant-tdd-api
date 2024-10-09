@@ -21,6 +21,7 @@ class RestaurantFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
+//            'user_id' => fn() => User::factory()->create(),
             'code' => fake()->unique()->randomNumber(6),
             'name' => fake()->company,
             'description' => fake()->text,

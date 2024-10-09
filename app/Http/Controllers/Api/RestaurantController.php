@@ -55,9 +55,11 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRestaurantRequest $request, Restaurant $restaurant)
+    public function update(UpdateRestaurantRequest $request, Restaurant $restaurant): RestaurantResource
     {
-        //
+        $restaurant->update($request->all());
+
+        return new RestaurantResource($restaurant);
     }
 
     /**
