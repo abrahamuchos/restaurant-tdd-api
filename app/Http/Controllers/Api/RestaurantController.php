@@ -76,10 +76,16 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param Restaurant $restaurant
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws AuthorizationException
      */
-    public function destroy(Restaurant $restaurant)
+    public function destroy(Restaurant $restaurant): \Illuminate\Http\JsonResponse
     {
-        //
+        Gate::authorize('delete', $restaurant);
+        $wasDeleted = $restaurant->delete();
+
+        return $wasDeleted ? response()->json([], 204) : response()->json([], 404);
     }
 }
