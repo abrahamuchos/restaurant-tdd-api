@@ -15,9 +15,12 @@ class RestaurantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        //
+        $user = auth()->user();
+        $restaurants = Restaurant::where('user_id', $user->id)->get();
+
+        return RestaurantResource::collection($restaurants);
     }
 
     /**
