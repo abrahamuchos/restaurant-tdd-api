@@ -7,6 +7,8 @@ use App\Http\Requests\Restaurant\StoreRestaurantRequest;
 use App\Http\Requests\Restaurant\UpdateRestaurantRequest;
 use App\Http\Resources\Restaurant\RestaurantResource;
 use App\Models\Restaurant;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Gate;
 
 class RestaurantController extends Controller
 {
@@ -53,10 +55,18 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified restaurant in storage.
+     *
+     * @param UpdateRestaurantRequest $request
+     * @param Restaurant              $restaurant
+     *
+     * @return RestaurantResource
+     * @throws AuthorizationException
      */
     public function update(UpdateRestaurantRequest $request, Restaurant $restaurant): RestaurantResource
     {
+        Gate::authorize('update', $restaurant);
+
         $restaurant->update($request->all());
 
         return new RestaurantResource($restaurant);
