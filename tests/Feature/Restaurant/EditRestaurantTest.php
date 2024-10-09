@@ -112,6 +112,14 @@ class EditRestaurantTest extends TestCase
         $response->assertStatus(401);
     }
 
+    public function test_user_cannot_edit_other_user_restaurant(): void
+    {
+        $user = User::factory()->create();
+        $response = $this->apiAs($user, 'patch', "$this->apiBase/restaurants/{$this->restaurant->id}", $this->data);
+
+        $response->assertStatus(403);
+    }
+
     public function test_put_user_id_must_be_required(): void
     {
         $this->data['userId'] = null;

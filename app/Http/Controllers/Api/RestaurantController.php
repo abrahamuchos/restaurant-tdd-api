@@ -7,15 +7,20 @@ use App\Http\Requests\Restaurant\StoreRestaurantRequest;
 use App\Http\Requests\Restaurant\UpdateRestaurantRequest;
 use App\Http\Resources\Restaurant\RestaurantResource;
 use App\Models\Restaurant;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Gate;
 
 class RestaurantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        //
+        $user = auth()->user();
+        $restaurants = Restaurant::where('user_id', $user->id)->get();
+
+        return RestaurantResource::collection($restaurants);
     }
 
     /**
@@ -53,10 +58,18 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified restaurant in storage.
+     *
+     * @param UpdateRestaurantRequest $request
+     * @param Restaurant              $restaurant
+     *
+     * @return RestaurantResource
+     * @throws AuthorizationException
      */
     public function update(UpdateRestaurantRequest $request, Restaurant $restaurant): RestaurantResource
     {
+        Gate::authorize('update', $restaurant);
+
         $restaurant->update($request->all());
 
         return new RestaurantResource($restaurant);
