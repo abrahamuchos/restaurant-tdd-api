@@ -5,7 +5,6 @@ namespace Tests\Feature\Restaurant;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DeleteRestaurantTest extends TestCase
