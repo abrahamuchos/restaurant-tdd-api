@@ -50,11 +50,16 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @param Restaurant $restaurant
+     *
+     * @return RestaurantResource
+     * @throws AuthorizationException
      */
-    public function show(Restaurant $restaurant)
+    public function show(Restaurant $restaurant): RestaurantResource
     {
-        //
+        Gate::authorize('view', $restaurant);
+
+        return new RestaurantResource($restaurant);
     }
 
     /**
