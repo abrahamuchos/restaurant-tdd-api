@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @property int                             $id
  * @property int                             $user_id
@@ -44,6 +45,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant whereCode($value)
  * @property string $opening_hour
  * @property string $closing_hour
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dish> $dishes
+ * @property-read int|null $dishes_count
  * @mixin \Eloquent
  */
 class Restaurant extends Model
@@ -71,6 +74,14 @@ class Restaurant extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function dishes(): HasMany
+    {
+        return $this->hasMany(Dish::class);
     }
 
 }
