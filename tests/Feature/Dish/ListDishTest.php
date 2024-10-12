@@ -50,6 +50,15 @@ class ListDishTest extends TestCase
         ]);
     }
 
+    public function test_authenticated_user_cannot_list_dishes_of_other_restaurants(): void
+    {
+        $otherUser = User::factory()->create();
+
+        $response = $this->apiAs($otherUser, 'get', "$this->apiBase/{$this->restaurant->id}/dishes");
+
+        $response->assertStatus(403);
+    }
+
     public function test_unauthenticated_user_cannot_list_dishes(): void
     {
         $response = $this->getJson("$this->apiBase/{$this->restaurant->id}/dishes");
