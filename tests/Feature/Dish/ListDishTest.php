@@ -52,9 +52,9 @@ class ListDishTest extends TestCase
 
     public function test_authenticated_user_cannot_list_dishes_of_other_restaurants(): void
     {
-        $otherUser = User::factory()->create();
+        $otherRestaurant = Restaurant::factory()->create();
 
-        $response = $this->apiAs($otherUser, 'get', "$this->apiBase/{$this->restaurant->id}/dishes");
+        $response = $this->apiAs($this->user, 'get', "$this->apiBase/$otherRestaurant->id/dishes");
 
         $response->assertStatus(403);
     }
