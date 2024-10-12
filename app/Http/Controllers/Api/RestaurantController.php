@@ -8,6 +8,8 @@ use App\Http\Requests\Restaurant\UpdateRestaurantRequest;
 use App\Http\Resources\Restaurant\RestaurantResource;
 use App\Models\Restaurant;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 
 class RestaurantController extends Controller
@@ -15,10 +17,16 @@ class RestaurantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
+        $request->validate([
+            'page' => 'nullable|integer|min:1',
+            'perPage' => 'nullable|integer|min:1|max:50',
+        ]);
+
         $user = auth()->user();
-        $restaurants = Restaurant::where('user_id', $user->id)->get();
+        $restaurants = Restaurant::where('user_id', $user->id)
+            ->paginate($request->perPage ?? 15, ['*'], 'page', $request->page ?? 1);
 
         return RestaurantResource::collection($restaurants);
     }
