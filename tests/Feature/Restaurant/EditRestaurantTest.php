@@ -4,6 +4,8 @@ namespace Tests\Feature\Restaurant;
 
 use App\Models\Restaurant;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,6 +13,8 @@ class EditRestaurantTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected int $perPage;
+    protected Restaurant|Collection|Model $restaurant;
     private array $data = [
         'userId' => null,
         'code' => 'R302',

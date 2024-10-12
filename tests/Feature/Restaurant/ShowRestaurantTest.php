@@ -4,12 +4,17 @@ namespace Tests\Feature\Restaurant;
 
 use App\Models\Restaurant;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ShowRestaurantTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected User|Collection|Model $user;
+    protected Restaurant|Collection|Model $restaurant;
 
     protected function setUp(): void
     {

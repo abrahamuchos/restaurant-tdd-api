@@ -4,13 +4,18 @@ namespace Tests\Feature\Restaurant;
 
 use App\Models\Restaurant;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PaginateRestaurantTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected int $perPage;
+    protected User|Collection|Model $user;
+    protected Restaurant|Collection|Model $restaurant;
 
     protected function setUp(): void
     {
