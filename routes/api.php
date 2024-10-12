@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\DishController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,10 @@ Route::group(['prefix' => 'v1'], function () {
 
        //Restaurants
         Route::apiResource('restaurants', RestaurantController::class);
+
+        //Dishes
+        Route::as('restaurant')
+            ->apiResource('{restaurant:id}/dishes', DishController::class);
     });
 
 });
