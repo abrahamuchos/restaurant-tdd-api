@@ -20,7 +20,7 @@ class ListRestaurantTest extends TestCase
         Restaurant::factory(10)->create([
             'user_id' => $this->user->id,
         ]);
-        Restaurant::factory(15)->create();
+        Restaurant::factory(150)->create();
     }
 
 
@@ -30,7 +30,7 @@ class ListRestaurantTest extends TestCase
         $response = $this->apiAs($this->user, 'get', "$this->apiBase/restaurants");
 
         $response->assertStatus(200);
-        $response->assertJsonCount(10, 'data');
+        $response->assertJsonCount(15, 'data');
     }
 
     public function test_authenticated_user_without_restaurant_must_see_empty_restaurant_list(): void

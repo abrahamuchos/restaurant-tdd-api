@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('address', 300);
             $table->string('phone', 65);
             $table->string('email', 50);
-            $table->string('website', 65)->nullable();
+            $table->string('website', 255)->nullable();
             $table->time('opening_hour');
             $table->time('closing_hour');
             $table->string('logo')->nullable();
