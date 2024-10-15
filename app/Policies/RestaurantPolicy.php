@@ -37,6 +37,11 @@ class RestaurantPolicy
         //
     }
 
+    public function createDishes(User $user, Restaurant $restaurant): bool
+    {
+        return  $user->id === $restaurant->user_id;
+    }
+
     /**
      * Determine whether the user can update the model.
      */

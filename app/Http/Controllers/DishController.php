@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDishRequest;
 use App\Http\Resources\Dish\DishResource;
 use App\Models\Dish;
 use App\Models\Restaurant;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
@@ -15,9 +16,10 @@ class DishController extends Controller
 {
     /**
      * @param Restaurant $restaurant
+     * @param Request    $request
      *
      * @return AnonymousResourceCollection
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function index(Restaurant $restaurant, Request $request): AnonymousResourceCollection
     {
@@ -35,11 +37,24 @@ class DishController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Restaurant       $restaurant
+     * @param StoreDishRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreDishRequest $request)
+    public function store(Restaurant $restaurant, StoreDishRequest $request): \Illuminate\Http\JsonResponse
     {
-        //
+        Gate::authorize('createDishes', $restaurant);
+
+        Dish::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'restaurant_id' => $restaurant->id,
+        ]);
+
+        return response()->json([], 201);
     }
 
     /**
