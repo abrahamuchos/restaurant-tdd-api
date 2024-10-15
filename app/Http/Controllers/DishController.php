@@ -66,11 +66,20 @@ class DishController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param UpdateDishRequest $request
+     * @param Dish              $dish
+     * @param Restaurant        $restaurant
+     *
+     * @return DishResource
+     * @throws AuthorizationException
      */
-    public function update(UpdateDishRequest $request, Dish $dish)
+    public function update(UpdateDishRequest $request, Restaurant $restaurant, Dish $dish): DishResource
     {
-        //
+        Gate::authorize('updateDishes', $restaurant);
+
+        $dish->update($request->validated());
+
+        return new DishResource($dish);
     }
 
     /**
