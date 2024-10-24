@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Dish;
 
+use App\Http\Resources\Restaurant\RestaurantResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,13 +28,14 @@ class DishResource extends JsonResource
     {
         return [
             'id' => $this->id,
-//            'restaurantId',
+            'restaurantId' => $this->restaurant_id,
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
             'isAvailable' => $this->is_available,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
+            'restaurant' => new RestaurantResource($this->whenLoaded('restaurant')),
         ];
     }
 }
