@@ -79,7 +79,7 @@ class DishController extends Controller
      * @return DishResource
      * @throws AuthorizationException
      */
-    public function update(UpdateDishRequest $request, Restaurant $restaurant, Dish $dish): DishResource
+    public function update(UpdateDishRequest $request, Restaurant $restaurant, Dish $dish)
     {
         Gate::authorize('updateDishes', $restaurant);
 

@@ -32,7 +32,7 @@ class ListDishTest extends TestCase
 
     public function test_authenticated_user_can_list_their_dishes(): void
     {
-        $response = $this->apiAs($this->user, 'get', "$this->apiBase/{$this->restaurant->id}/dishes");
+        $response = $this->apiAs($this->user, 'get', "$this->apiBase/restaurants/{$this->restaurant->id}/dishes");
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -54,21 +54,25 @@ class ListDishTest extends TestCase
     {
         $otherRestaurant = Restaurant::factory()->create();
 
-        $response = $this->apiAs($this->user, 'get', "$this->apiBase/$otherRestaurant->id/dishes");
+        $response = $this->apiAs(
+            $this->user,
+            'get',
+            "$this->apiBase/restaurants/$otherRestaurant->id/dishes"
+        );
 
         $response->assertStatus(403);
     }
 
     public function test_unauthenticated_user_cannot_list_dishes(): void
     {
-        $response = $this->getJson("$this->apiBase/{$this->restaurant->id}/dishes");
+        $response = $this->getJson("$this->apiBase/restaurants/{$this->restaurant->id}/dishes");
 
         $response->assertStatus(401);
     }
 
     public function test_auth_user_can_list_dishes_with_pagination(): void
     {
-        $response = $this->apiAs($this->user, 'get', "$this->apiBase/{$this->restaurant->id}/dishes");
+        $response = $this->apiAs($this->user, 'get', "$this->apiBase/restaurants/{$this->restaurant->id}/dishes");
 
         $response->assertStatus(200);
         $response->assertJsonCount($this->perPage, 'data');
@@ -116,7 +120,7 @@ class ListDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'get',
-            "$this->apiBase/{$this->restaurant->id}/dishes?page=$page"
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes?page=$page"
         );
 
         $response->assertStatus(200);
@@ -134,7 +138,7 @@ class ListDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'get',
-            "$this->apiBase/{$this->restaurant->id}/dishes?perPage=$perPage"
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes?perPage=$perPage"
         );
 
         $response->assertStatus(200);

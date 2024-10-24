@@ -30,7 +30,7 @@ class ShowDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'get',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}"
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}"
         );
 
         $response->assertStatus(200);
@@ -60,7 +60,7 @@ class ShowDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'get',
-            "$this->apiBase/{$otherRestaurant->id}/dishes/{$this->dish->id}"
+            "$this->apiBase/restaurants/{$otherRestaurant->id}/dishes/{$this->dish->id}"
         );
 
         $response->assertStatus(403);
@@ -73,7 +73,7 @@ class ShowDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'get',
-            "$this->apiBase/{$plate->restaurant->id}/dishes/{$plate->id}"
+            "$this->apiBase/restaurants/{$plate->restaurant->id}/dishes/{$plate->id}"
         );
 
         $response->assertStatus(403);
@@ -81,7 +81,7 @@ class ShowDishTest extends TestCase
 
     public function test_unauthenticated_user_cannot_see_a_dish_of_a_restaurant()
     {
-        $response = $this->getJson("$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}");
+        $response = $this->getJson("$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}");
 
         $response->assertStatus(401);
     }
@@ -93,7 +93,7 @@ class ShowDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'get',
-            "$this->apiBase/{$this->restaurant->id}/dishes/$dishId"
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/$dishId"
         );
 
         $response->assertStatus(404);

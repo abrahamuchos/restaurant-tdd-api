@@ -28,7 +28,7 @@ Route::group(['prefix' => 'v1'], function () {
 
         //Dishes
         Route::as('restaurant')
-            ->apiResource('{restaurant:id}/dishes', DishController::class);
+            ->apiResource('restaurants/{restaurant:id}/dishes', DishController::class);
     });
 
 });

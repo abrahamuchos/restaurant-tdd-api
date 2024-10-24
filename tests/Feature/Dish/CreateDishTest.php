@@ -37,7 +37,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes", $this->data
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes", $this->data
         );
 
         $response->assertStatus(201);
@@ -52,7 +52,7 @@ class CreateDishTest extends TestCase
 
     public function test_unauthenticated_user_cannot_create_dish(): void
     {
-        $response = $this->postJson("$this->apiBase/{$this->restaurant->id}/dishes", $this->data);
+        $response = $this->postJson("$this->apiBase/restaurants/{$this->restaurant->id}/dishes", $this->data);
 
         $response->assertStatus(401);
         $this->assertDatabaseMissing('dishes', [
@@ -68,7 +68,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $otherUser,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -104,7 +104,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -123,7 +123,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -142,7 +142,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -161,7 +161,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -180,7 +180,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -199,7 +199,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -217,7 +217,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -236,7 +236,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -255,7 +255,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -274,7 +274,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -292,7 +292,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
@@ -311,7 +311,7 @@ class CreateDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'post',
-            "$this->apiBase/{$this->restaurant->id}/dishes",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes",
             $this->data
         );
 
