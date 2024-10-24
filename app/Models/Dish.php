@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  *
@@ -47,5 +48,13 @@ class Dish extends Model
     public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function menus(): BelongsToMany
+    {
+        return $this->belongsToMany(Menu::class, 'dish_menu');
     }
 }
