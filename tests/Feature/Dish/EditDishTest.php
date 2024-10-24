@@ -37,7 +37,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'put',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             $this->data
         );
 
@@ -56,7 +56,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'name' => $this->data['name'],
                 'price' => $this->data['price'],
@@ -73,7 +73,7 @@ class EditDishTest extends TestCase
     public function test_unauthenticated_user_cannot_update_for_their_dish(): void
     {
         $response = $this->putJson(
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             $this->data
         );
 
@@ -87,7 +87,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $otherUser,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'name' => $this->data['name'],
                 'price' => $this->data['price'],
@@ -127,7 +127,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'name' => $this->data['name'],
                 'price' => $this->data['price'],
@@ -150,7 +150,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'name' => $this->data['name'],
                 'price' => $this->data['price'],
@@ -172,7 +172,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'name' => $this->data['name'],
                 'price' => $this->data['price'],
@@ -194,7 +194,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'name' => $this->data['name'],
                 'price' => $this->data['price'],
@@ -216,7 +216,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'description' => $this->data['description'],
                 'price' => $this->data['price'],
@@ -238,7 +238,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'description' => $this->data['description'],
                 'price' => $this->data['price'],
@@ -260,7 +260,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'description' => $this->data['description'],
                 'price' => $this->data['price'],
@@ -282,7 +282,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'description' => $this->data['description'],
                 'price' => $this->data['price'],
@@ -304,7 +304,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'description' => $this->data['description'],
                 'price' => $this->data['price'],
@@ -326,7 +326,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'description' => $this->data['description'],
                 'price' => $this->data['price'],
@@ -348,7 +348,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'description' => $this->data['description'],
                 'price' => $this->data['price'],
@@ -370,7 +370,7 @@ class EditDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'patch',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}",
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}",
             [
                 'name' => $this->data['name'],
                 'isAvailable' => $this->data['isAvailable'],

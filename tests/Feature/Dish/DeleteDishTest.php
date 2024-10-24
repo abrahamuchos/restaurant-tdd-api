@@ -25,7 +25,7 @@ class DeleteDishTest extends TestCase
 
     public function test_unauthenticated_user_cannot_delete_dish()
     {
-        $response = $this->deleteJson("$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}");
+        $response = $this->deleteJson("$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}");
 
         $response->assertStatus(401);
     }
@@ -35,7 +35,7 @@ class DeleteDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'delete',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}"
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}"
         );
 
         $response->assertStatus(204);
@@ -49,7 +49,7 @@ class DeleteDishTest extends TestCase
         $response = $this->apiAs(
           $this->user,
             'delete',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$otherDish->id}"
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$otherDish->id}"
         );
 
         $response->assertStatus(403);
@@ -61,7 +61,7 @@ class DeleteDishTest extends TestCase
         $response = $this->apiAs(
             $this->user,
             'delete',
-            "$this->apiBase/{$this->restaurant->id}/dishes/{$this->dish->id}"
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}"
         );
 
         $response->assertStatus(204);
