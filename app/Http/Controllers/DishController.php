@@ -89,10 +89,18 @@ class DishController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param Restaurant $restaurant
+     * @param Dish       $dish
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws AuthorizationException
      */
-    public function destroy(Dish $dish)
+    public function destroy(Restaurant $restaurant, Dish $dish): \Illuminate\Http\JsonResponse
     {
-        //
+        Gate::authorize('deleteDishes', [$restaurant, $dish]);
+
+        $dish->delete();
+
+        return response()->json([], 204);
     }
 }

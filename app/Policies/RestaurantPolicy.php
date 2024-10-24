@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Dish;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -70,6 +71,11 @@ class RestaurantPolicy
     public function restore(User $user, Restaurant $restaurant): bool
     {
         //
+    }
+
+    public function deleteDishes(User $user, Restaurant $restaurant, Dish $dish): bool
+    {
+        return  $user->id === $restaurant->user_id && $dish->restaurant_id === $restaurant->id;
     }
 
     /**
