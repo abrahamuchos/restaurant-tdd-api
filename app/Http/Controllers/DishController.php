@@ -58,11 +58,17 @@ class DishController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @param Restaurant $restaurant
+     * @param Dish       $dish
+     *
+     * @return DishResource
+     * @throws AuthorizationException
      */
-    public function show(Dish $dish)
+    public function show(Restaurant $restaurant, Dish $dish): DishResource
     {
-        //
+        Gate::authorize('viewDishes', $restaurant);
+
+        return new DishResource($dish->load('restaurant'));
     }
 
     /**
