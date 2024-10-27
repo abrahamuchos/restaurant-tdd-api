@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- *
+ * 
  *
  * @property int                              $id
  * @property int                              $restaurant_id
@@ -31,6 +31,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Dish wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dish whereRestaurantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dish whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
+ * @property-read int|null $menus_count
  * @mixin \Eloquent
  */
 class Dish extends Model

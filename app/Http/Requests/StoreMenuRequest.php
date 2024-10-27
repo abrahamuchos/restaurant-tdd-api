@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MenuDishRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreMenuRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreMenuRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,11 @@ class StoreMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:65',
+            'description' => 'required|string|max:100',
+            'restaurantId' => 'required|integer|exists:restaurants,id',
+            'dishes' => 'nullable|array',
+            'dishes.*' => ['nullable','integer','exists:dishes,id', new MenuDishRule()],
         ];
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
+ * 
  *
  * @property int                             $id
  * @property int                             $user_id
@@ -48,6 +48,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $closing_hour
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dish> $dishes
  * @property-read int|null $dishes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
+ * @property-read int|null $menus_count
  * @mixin \Eloquent
  */
 class Restaurant extends Model
