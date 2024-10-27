@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- *
+ * 
  *
  * @property int                              $id
  * @property int                              $restaurant_id
@@ -30,6 +31,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Dish wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dish whereRestaurantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dish whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
+ * @property-read int|null $menus_count
  * @mixin \Eloquent
  */
 class Dish extends Model
@@ -47,5 +50,13 @@ class Dish extends Model
     public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function menus(): BelongsToMany
+    {
+        return $this->belongsToMany(Menu::class, 'dish_menu');
     }
 }

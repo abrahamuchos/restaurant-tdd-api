@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -47,6 +48,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $closing_hour
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dish> $dishes
  * @property-read int|null $dishes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
+ * @property-read int|null $menus_count
  * @mixin \Eloquent
  */
 class Restaurant extends Model
@@ -84,4 +87,11 @@ class Restaurant extends Model
         return $this->hasMany(Dish::class);
     }
 
+    /**
+     * @return HasMany
+     */
+    public function menus(): HasMany
+    {
+        return $this->hasMany(Menu::class);
+    }
 }

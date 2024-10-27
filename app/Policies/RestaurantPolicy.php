@@ -38,6 +38,11 @@ class RestaurantPolicy
         //
     }
 
+    public function createMenu(User $user, Restaurant $restaurant): bool
+    {
+        return  $user->id === $restaurant->user_id;
+    }
+
     public function createDishes(User $user, Restaurant $restaurant): bool
     {
         return  $user->id === $restaurant->user_id;
