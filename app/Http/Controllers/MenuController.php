@@ -48,11 +48,21 @@ class MenuController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param UpdateMenuRequest $request
+     * @param Restaurant        $restaurant
+     * @param Menu              $menu
+     *
+     * @return MenuResource
      */
-    public function update(UpdateMenuRequest $request, Menu $menu)
+    public function update(UpdateMenuRequest $request, Restaurant $restaurant, Menu $menu): MenuResource
     {
-        //
+        $menu->update($request->only('name', 'description'));
+
+        if( $request->has('dishes') ) {
+            $menu->dishes()->sync($request->input('dishes'));
+        }
+
+        return new MenuResource($menu->load('dishes', 'restaurant'));
     }
 
     /**
