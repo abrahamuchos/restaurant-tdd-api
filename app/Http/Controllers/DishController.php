@@ -93,6 +93,7 @@ class DishController extends Controller
     {
         Gate::authorize('deleteDishes', [$restaurant, $dish]);
 
+        $dish->menus()->detach();
         $dish->delete();
 
         return response()->json([], 204);
