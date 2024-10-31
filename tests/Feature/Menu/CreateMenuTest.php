@@ -165,6 +165,27 @@ class CreateMenuTest extends TestCase
         $response->assertJsonStructure(['message', 'errors']);
     }
 
+    public function test_authenticated_user_cannot_create_menu_with_duplicates_dishes()
+    {
+        $this->data['dishes'] = [$this->dishes[0]->id, $this->dishes[0]->id];
+
+        $response = $this->apiAs(
+            $this->user,
+            'post',
+            "$this->apiBase/restaurants/{$this->restaurant->id}/menus",
+            $this->data
+        );
+
+        $response->assertStatus(201);
+        $this->assertDatabaseHas('menus', [
+           'id' => $response->json('data.id'),
+           'name' => $this->data['name'],
+           'description' => $this->data['description'],
+           'restaurant_id' => $this->data['restaurantId'],
+        ]);
+        $this->assertDatabaseCount('dish_menu', 1);
+    }
+
     public function test_authenticated_user_cannot_create_menu_with_dishes_from_another_restaurant()
     {
         $dish = Dish::factory()->create();
