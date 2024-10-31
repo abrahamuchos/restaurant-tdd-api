@@ -4,6 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property int                              $id
+ * @property int                              $restaurantId
+ * @property string                           $name
+ * @property string|null                      $description
+ * @property float                            $price
+ * @property bool                             $isAvailable
+ * @property-read \App\Models\Restaurant|null $restaurant
+ */
 class UpdateDishRequest extends FormRequest
 {
     /**
@@ -21,7 +30,7 @@ class UpdateDishRequest extends FormRequest
      */
     public function rules(): array
     {
-        if($this->method() === 'PUT'){
+        if ($this->method() === 'PUT') {
             return [
                 'restaurantId' => 'required|exists:restaurants,id',
                 'name' => 'required|string|max:65',
@@ -30,7 +39,7 @@ class UpdateDishRequest extends FormRequest
                 'isAvailable' => 'required|boolean',
             ];
 
-        }else{
+        } else {
             return [
                 'restaurantId' => 'sometimes|exists:restaurants,id',
                 'name' => 'sometimes|string|max:65',
@@ -40,4 +49,20 @@ class UpdateDishRequest extends FormRequest
             ];
         }
     }
+
+    protected function prepareForValidation(): void
+    {
+        if($this->restaurantId){
+            $this->merge([
+                'restaurant_id' => $this->restaurantId,
+            ]);
+        }
+
+        if($this->isAvailable){
+            $this->merge([
+                'is_available' => $this->isAvailable,
+            ]);
+        }
+    }
+
 }

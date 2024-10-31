@@ -19,21 +19,24 @@ Route::group(['prefix' => 'v1'], function () {
     Route::patch('reset-password', [AuthController::class, 'resetPassword']);
 
     /** Protected Routes */
-    Route::middleware('auth:api')->group(function (){
-       // Users
-       Route::patch('profile', [UserController::class, 'update']);
-       Route::patch('password', [UserController::class, 'updatePassword']);
+    Route::middleware('auth:api')->group(function () {
+        // Users
+        Route::patch('profile', [UserController::class, 'update']);
+        Route::patch('password', [UserController::class, 'updatePassword']);
 
-       //Restaurants
+        //Restaurants
         Route::apiResource('restaurants', RestaurantController::class);
+        Route::middleware('can:view,restaurant')
+        ->as('restaurant')
+            ->prefix('restaurants/{restaurant:id}')
+            ->group(function () {
+                //Dishes
+                Route::apiResource('dishes', DishController::class);
 
-        //Dishes
-        Route::as('restaurant')
-            ->apiResource('restaurants/{restaurant:id}/dishes', DishController::class);
+                //Menus
+                Route::apiResource('menus', MenuController::class);
+            });
 
-        //Menus
-        Route::as('restaurant')
-            ->apiResource('restaurants/{restaurant:id}/menus', MenuController::class);
     });
 
 });

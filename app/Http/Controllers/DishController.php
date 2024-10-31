@@ -23,7 +23,6 @@ class DishController extends Controller
      */
     public function index(Restaurant $restaurant, Request $request): AnonymousResourceCollection
     {
-        Gate::authorize('viewDishes', $restaurant);
         $request->validate([
           'perPage' => 'nullable|integer|min:1|max:100',
           'page' => 'nullable|integer|min:1',
@@ -45,8 +44,6 @@ class DishController extends Controller
      */
     public function store(Restaurant $restaurant, StoreDishRequest $request): \Illuminate\Http\JsonResponse
     {
-        Gate::authorize('createDishes', $restaurant);
-
         Dish::create([
             'name' => $request->name,
             'description' => $request->description,
@@ -66,7 +63,6 @@ class DishController extends Controller
      */
     public function show(Restaurant $restaurant, Dish $dish): DishResource
     {
-        Gate::authorize('viewDishes', $restaurant);
 
         return new DishResource($dish->load('restaurant'));
     }
@@ -79,11 +75,9 @@ class DishController extends Controller
      * @return DishResource
      * @throws AuthorizationException
      */
-    public function update(UpdateDishRequest $request, Restaurant $restaurant, Dish $dish)
+    public function update(UpdateDishRequest $request, Restaurant $restaurant, Dish $dish): DishResource
     {
-        Gate::authorize('updateDishes', $restaurant);
-
-        $dish->update($request->validated());
+        $dish->update($request->all());
 
         return new DishResource($dish);
     }

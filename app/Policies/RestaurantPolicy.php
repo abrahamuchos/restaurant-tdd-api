@@ -25,27 +25,12 @@ class RestaurantPolicy
         return  $user->id === $restaurant->user_id;
     }
 
-    public function viewDishes(User $user, Restaurant $restaurant): bool
-    {
-        return  $user->id === $restaurant->user_id;
-    }
-
     /**
      * Determine whether the user can create models.
      */
     public function create(User $user): bool
     {
         //
-    }
-
-    public function createMenu(User $user, Restaurant $restaurant): bool
-    {
-        return  $user->id === $restaurant->user_id;
-    }
-
-    public function createDishes(User $user, Restaurant $restaurant): bool
-    {
-        return  $user->id === $restaurant->user_id;
     }
 
     /**

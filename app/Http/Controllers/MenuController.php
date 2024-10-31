@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\Gate;
 class MenuController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @param Restaurant $restaurant
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function index()
+    public function index(Restaurant $restaurant): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        //
+        return MenuResource::collection($restaurant->menus()->paginate());
     }
 
     /**
@@ -28,8 +31,6 @@ class MenuController extends Controller
      */
     public function store(StoreMenuRequest $request, Restaurant $restaurant): MenuResource
     {
-        Gate::authorize('createMenu', $restaurant);
-
         /**
          * @type Menu $menu
          */
