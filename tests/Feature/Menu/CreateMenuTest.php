@@ -147,7 +147,7 @@ class CreateMenuTest extends TestCase
             $this->data
         );
 
-        $response->assertStatus(422);
+        $response->assertStatus(403);
     }
 
     public function test_authenticated_user_cannot_create_menu_with_invalid_dishes()

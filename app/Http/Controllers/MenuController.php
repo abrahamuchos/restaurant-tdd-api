@@ -19,8 +19,6 @@ class MenuController extends Controller
      */
     public function index(Restaurant $restaurant): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        Gate::authorize('viewMenus', $restaurant);
-
         return MenuResource::collection($restaurant->menus()->paginate());
     }
 
@@ -33,8 +31,6 @@ class MenuController extends Controller
      */
     public function store(StoreMenuRequest $request, Restaurant $restaurant): MenuResource
     {
-        Gate::authorize('createMenu', $restaurant);
-
         /**
          * @type Menu $menu
          */
