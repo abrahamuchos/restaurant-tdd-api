@@ -43,6 +43,7 @@ class ListMenusTest extends TestCase
 
     public function test_authenticated_user_can_list_their_menus_with_pagination()
     {
+
         $response = $this->apiAs(
             $this->user,
             'get',
@@ -51,21 +52,24 @@ class ListMenusTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount($this->perPage, 'data');
+        $response->assertJsonPath('data.0.type', 'menus');
+        $response->assertJsonPath(
+            'data.0.links.self',
+            route('restaurants.menus.show', [$this->restaurant->id, $this->menu->first()->id])
+        );
+        $response->assertJsonPath(
+            'data.0.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
+                    'type',
                     'id',
                     'name',
                     'description',
-                    'dishes' => [
-                        '*' => [
-                            'id',
-                            'name',
-                            'description',
-                            'price',
-                            'isAvailable',
-                        ]
-                    ]
+                    'links',
+                    'relationships'
                 ]
             ],
             'meta' => [

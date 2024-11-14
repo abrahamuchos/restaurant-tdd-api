@@ -15,7 +15,6 @@ class MenuController extends Controller
      * @param Restaurant $restaurant
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Restaurant $restaurant): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
