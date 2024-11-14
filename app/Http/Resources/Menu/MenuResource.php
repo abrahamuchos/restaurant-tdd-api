@@ -28,14 +28,21 @@ class MenuResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'type' => 'menus',
             'id' => $this->id,
             'restaurantId' => $this->restaurant_id,
             'name' => $this->name,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'dishes' => $this->whenLoaded('dishes', DishResource::collection($this->dishes)),
-            'restaurant' => $this->whenLoaded('restaurant', new RestaurantResource($this->restaurant)),
+            'links' => [
+                'self' => route('restaurants.menus.show', [$this->restaurant_id, $this->id]),
+                'parent' => route('restaurants.show', $this->restaurant_id)
+            ],
+            'relationships' => [
+                'dishes' => DishResource::collection($this->whenLoaded('dishes')),
+                'restaurant' => new RestaurantResource($this->whenLoaded('restaurant')),
+            ],
         ];
     }
 }
