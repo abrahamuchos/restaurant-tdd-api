@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -50,11 +50,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $dishes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
  * @property-read int|null $menus_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Restaurant search($search = '')
  * @mixin \Eloquent
  */
 class Restaurant extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSearch;
 
     protected $fillable = [
         'user_id',
@@ -93,5 +94,13 @@ class Restaurant extends Model
     public function menus(): HasMany
     {
         return $this->hasMany(Menu::class);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function searchFields(): array
+    {
+       return ['name', 'description', 'code'];
     }
 }
