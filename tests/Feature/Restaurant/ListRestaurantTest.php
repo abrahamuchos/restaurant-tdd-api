@@ -29,13 +29,28 @@ class ListRestaurantTest extends TestCase
         Restaurant::factory(150)->create();
     }
 
-
-
     public function test_authenticated_user_must_see_their_restaurant_list(): void
     {
         $response = $this->apiAs($this->user, 'get', "$this->apiBase/restaurants");
 
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+           'data' =>[
+               '*' => ['id', 'userId', 'code', 'name', 'links']
+           ]
+        ]);
+        $response->assertJsonPath(
+            'data.0.links.self',
+            route('restaurants.show', $this->user->restaurants->first()->id)
+        );
+        $response->assertJsonPath(
+            'data.0.links.menus',
+            route('restaurants.menus.index', $this->user->restaurants->first()->id)
+        );
+        $response->assertJsonPath(
+            'data.0.links.dishes',
+            route('restaurants.dishes.index', $this->user->restaurants->first()->id)
+        );
         $response->assertJsonCount($this->perPage, 'data');
     }
 

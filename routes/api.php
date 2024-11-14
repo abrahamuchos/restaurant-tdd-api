@@ -27,7 +27,7 @@ Route::group(['prefix' => 'v1'], function () {
         //Restaurants
         Route::apiResource('restaurants', RestaurantController::class);
         Route::middleware('can:view,restaurant')
-        ->as('restaurant')
+        ->as('restaurants.')
             ->prefix('restaurants/{restaurant:id}')
             ->group(function () {
                 //Dishes
