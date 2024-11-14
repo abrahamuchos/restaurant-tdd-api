@@ -42,6 +42,30 @@ class EditDishTest extends TestCase
         );
 
         $response->assertStatus(200);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.dishes.show', [$this->restaurant->id, $this->dish->id])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
+        $response->assertJsonStructure([
+            'data' => [
+                'type',
+                'id',
+                'name',
+                'description',
+                'price',
+                'isAvailable',
+                'createdAt',
+                'updatedAt',
+                'links',
+                'relationships' => [
+                    'menus'
+                ]
+            ],
+        ]);
         $this->assertDatabaseHas('dishes', [
             'restaurant_id' => $this->restaurant->id,
             'name' => $this->data['name'],
@@ -64,6 +88,30 @@ class EditDishTest extends TestCase
         );
 
         $response->assertStatus(200);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.dishes.show', [$this->restaurant->id, $this->dish->id])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
+        $response->assertJsonStructure([
+            'data' => [
+                'type',
+                'id',
+                'name',
+                'description',
+                'price',
+                'isAvailable',
+                'createdAt',
+                'updatedAt',
+                'links',
+                'relationships' => [
+                    'menus'
+                ]
+            ],
+        ]);
         $this->assertDatabaseHas('dishes', [
             'name' => $this->data['name'],
             'price' => $this->data['price'],
