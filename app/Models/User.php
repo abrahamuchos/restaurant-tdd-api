@@ -12,7 +12,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -38,6 +38,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Restaurant> $restaurants
+ * @property-read int|null $restaurants_count
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements JWTSubject
