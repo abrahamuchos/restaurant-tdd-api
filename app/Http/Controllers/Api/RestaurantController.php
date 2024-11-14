@@ -67,7 +67,7 @@ class RestaurantController extends Controller
     {
         Gate::authorize('view', $restaurant);
 
-        return new RestaurantResource($restaurant);
+        return new RestaurantResource($restaurant->load('dishes', 'menus'));
     }
 
     /**

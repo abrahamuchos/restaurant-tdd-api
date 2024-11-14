@@ -47,8 +47,21 @@ class EditRestaurantTest extends TestCase
         $response = $this->apiAs($user, 'put', "$this->apiBase/restaurants/{$this->restaurant->id}", $this->data);
 
         $response->assertStatus(200);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.show', $user->restaurants->first()->id)
+        );
+        $response->assertJsonPath(
+            'data.links.menus',
+            route('restaurants.menus.index', $user->restaurants->first()->id)
+        );
+        $response->assertJsonPath(
+            'data.links.dishes',
+            route('restaurants.dishes.index', $user->restaurants->first()->id)
+        );
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
@@ -60,7 +73,9 @@ class EditRestaurantTest extends TestCase
                 'closingHour',
                 'image',
                 'createdAt',
-                'updatedAt'
+                'updatedAt',
+                'links',
+                'relationships'
             ]
         ]);
         $this->assertDatabaseHas('restaurants', [
@@ -84,8 +99,21 @@ class EditRestaurantTest extends TestCase
         );
 
         $response->assertStatus(200);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.show', $user->restaurants->first()->id)
+        );
+        $response->assertJsonPath(
+            'data.links.menus',
+            route('restaurants.menus.index', $user->restaurants->first()->id)
+        );
+        $response->assertJsonPath(
+            'data.links.dishes',
+            route('restaurants.dishes.index', $user->restaurants->first()->id)
+        );
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
@@ -97,7 +125,9 @@ class EditRestaurantTest extends TestCase
                 'closingHour',
                 'image',
                 'createdAt',
-                'updatedAt'
+                'updatedAt',
+                'links',
+                'relationships'
             ]
         ]);
         $this->assertDatabaseHas(
