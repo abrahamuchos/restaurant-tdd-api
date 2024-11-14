@@ -18,6 +18,7 @@ class ListDishTest extends TestCase
     protected int $perPage;
     protected Restaurant|Collection|Model $restaurant;
     protected User|HigherOrderCollectionProxy $user;
+    protected Dish|Collection|Model $dishes;
 
     protected function setUp(): void
     {
@@ -25,7 +26,7 @@ class ListDishTest extends TestCase
         $this->perPage = 15;
         $this->restaurant = Restaurant::factory()->create();
         $this->user = $this->restaurant->user;
-        Dish::factory(15)->create([
+        $this->dishes = Dish::factory(15)->create([
             'restaurant_id' => $this->restaurant->id,
         ]);
     }
@@ -35,9 +36,19 @@ class ListDishTest extends TestCase
         $response = $this->apiAs($this->user, 'get', "$this->apiBase/restaurants/{$this->restaurant->id}/dishes");
 
         $response->assertStatus(200);
+        $response->assertJsonPath('data.0.type', 'dishes');
+        $response->assertJsonPath(
+            'data.0.links.self',
+            route('restaurants.dishes.show', [$this->restaurant->id, $this->dishes->first()->id])
+        );
+        $response->assertJsonPath(
+            'data.0.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
+                    'type',
                     'id',
                     'name',
                     'description',
@@ -45,6 +56,8 @@ class ListDishTest extends TestCase
                     'isAvailable',
                     'createdAt',
                     'updatedAt',
+                    'links',
+                    'relationships'
                 ]
             ]
         ]);
@@ -79,6 +92,7 @@ class ListDishTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
+                    'type',
                     'id',
                     'name',
                     'description',
@@ -86,6 +100,8 @@ class ListDishTest extends TestCase
                     'isAvailable',
                     'createdAt',
                     'updatedAt',
+                    'links',
+                    'relationships'
                 ]
             ],
             'meta' => [

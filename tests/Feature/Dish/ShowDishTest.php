@@ -34,21 +34,29 @@ class ShowDishTest extends TestCase
         );
 
         $response->assertStatus(200);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.dishes.show', [$this->restaurant->id, $this->dish->id])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
-                'restaurantId',
                 'name',
                 'description',
                 'price',
+                'isAvailable',
                 'createdAt',
                 'updatedAt',
-                'restaurant' => [
-                    'id',
-                    'userId',
-                    'code',
-                    'name'
-                ],
+                'links',
+                'relationships' => [
+                    'restaurant',
+                    'menus'
+                ]
             ],
         ]);
     }

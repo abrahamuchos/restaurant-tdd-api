@@ -19,7 +19,6 @@ class DishController extends Controller
      * @param Request    $request
      *
      * @return AnonymousResourceCollection
-     * @throws AuthorizationException
      */
     public function index(Restaurant $restaurant, Request $request): AnonymousResourceCollection
     {
@@ -40,7 +39,6 @@ class DishController extends Controller
      * @param StoreDishRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
-     * @throws AuthorizationException
      */
     public function store(Restaurant $restaurant, StoreDishRequest $request): \Illuminate\Http\JsonResponse
     {
@@ -64,7 +62,7 @@ class DishController extends Controller
     public function show(Restaurant $restaurant, Dish $dish): DishResource
     {
 
-        return new DishResource($dish->load('restaurant'));
+        return new DishResource($dish->load(['restaurant', 'menus']));
     }
 
     /**
@@ -79,7 +77,7 @@ class DishController extends Controller
     {
         $dish->update($request->all());
 
-        return new DishResource($dish);
+        return new DishResource($dish->load('menus'));
     }
 
     /**
