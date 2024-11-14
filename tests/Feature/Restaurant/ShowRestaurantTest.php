@@ -25,11 +25,27 @@ class ShowRestaurantTest extends TestCase
 
     public function test_authenticated_user_can_view_their_own_restaurant():void
     {
-        $response = $this->apiAs($this->user, 'get', "$this->apiBase/restaurants/{$this->restaurant->id}");
+        $response = $this->apiAs($this->user,
+            'get',
+            "$this->apiBase/restaurants/{$this->restaurant->id}"
+        );
 
         $response->assertStatus(200);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.show', $this->user->restaurants->first()->id)
+        );
+        $response->assertJsonPath(
+            'data.links.menus',
+            route('restaurants.menus.index', $this->user->restaurants->first()->id)
+        );
+        $response->assertJsonPath(
+            'data.links.dishes',
+            route('restaurants.dishes.index', $this->user->restaurants->first()->id)
+        );
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
@@ -41,7 +57,9 @@ class ShowRestaurantTest extends TestCase
                 'closingHour',
                 'image',
                 'createdAt',
-                'updatedAt'
+                'updatedAt',
+                'links',
+                'relationships' => ['menus', 'dishes']
             ]
         ]);
     }

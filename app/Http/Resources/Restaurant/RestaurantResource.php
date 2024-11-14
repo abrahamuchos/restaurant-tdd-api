@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Restaurant;
 
+use App\Http\Resources\Dish\DishResource;
+use App\Http\Resources\Menu\MenuResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -32,6 +34,7 @@ class RestaurantResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'type' => 'restaurants',
             'id' => $this->id,
             'userId' => $this->user_id,
             'code' => $this->code,
@@ -51,7 +54,11 @@ class RestaurantResource extends JsonResource
                 'self' => route('restaurants.show', $this->id),
                 'menus' => route('restaurants.menus.index', $this->id),
                 'dishes' => route('restaurants.dishes.index', $this->id),
-            ]
+            ],
+            'relationships' => [
+                'dishes' => DishResource::collection($this->whenLoaded('dishes')),
+                'menus' => MenuResource::collection($this->whenLoaded('menus')),
+            ],
 
         ];
     }

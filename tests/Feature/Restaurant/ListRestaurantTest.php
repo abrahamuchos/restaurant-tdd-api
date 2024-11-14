@@ -36,7 +36,7 @@ class ListRestaurantTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
            'data' =>[
-               '*' => ['id', 'userId', 'code', 'name', 'links']
+               '*' => ['type', 'id', 'userId', 'code', 'name', 'links', 'relationships']
            ]
         ]);
         $response->assertJsonPath(
