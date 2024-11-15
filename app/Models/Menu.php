@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,11 +30,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereRestaurantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Restaurant search($search = '')
  * @mixin \Eloquent
  */
 class Menu extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSearch;
 
     protected $fillable = [
         'name',
@@ -54,5 +56,13 @@ class Menu extends Model
     public function dishes(): BelongsToMany
     {
         return $this->belongsToMany(Dish::class, 'dish_menu');
+    }
+
+    /**
+     * @return string[]
+     */
+    public function searchFields(): array
+    {
+        return ['name', 'description', 'code'];
     }
 }
