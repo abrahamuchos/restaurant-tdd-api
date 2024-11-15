@@ -18,7 +18,7 @@ class MenuController extends Controller
      */
     public function index(Restaurant $restaurant): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return MenuResource::collection($restaurant->menus()->paginate());
+        return MenuResource::collection($restaurant->menus()->search()->paginate());
     }
 
     /**
