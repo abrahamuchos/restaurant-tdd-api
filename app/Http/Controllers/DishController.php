@@ -29,6 +29,7 @@ class DishController extends Controller
 
         $dishes = $restaurant
             ->dishes()
+            ->search()
             ->paginate($request->perPage ?? 15, ['*'], 'page', $request->page ?? 1);
 
         return DishResource::collection($dishes);

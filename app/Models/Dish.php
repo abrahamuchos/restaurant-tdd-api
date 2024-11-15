@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * 
  *
- * @property int                              $id
- * @property int                              $restaurant_id
- * @property string                           $name
- * @property string|null                      $description
- * @property float                            $price
- * @property bool                             $is_available
- * @property \Illuminate\Support\Carbon|null  $created_at
- * @property \Illuminate\Support\Carbon|null  $updated_at
- * @property-read \App\Models\Restaurant|null $restaurant
+ *
+ * @property int                                                                  $id
+ * @property int                                                                  $restaurant_id
+ * @property string                                                               $name
+ * @property string|null                                                          $description
+ * @property float                                                                $price
+ * @property bool                                                                 $is_available
+ * @property \Illuminate\Support\Carbon|null                                      $created_at
+ * @property \Illuminate\Support\Carbon|null                                      $updated_at
+ * @property-read \App\Models\Restaurant|null                                     $restaurant
  * @method static \Database\Factories\DishFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Dish newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Dish newQuery()
@@ -32,12 +33,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Dish whereRestaurantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dish whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
- * @property-read int|null $menus_count
+ * @property-read int|null                                                        $menus_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Restaurant search($search = '')
  * @mixin \Eloquent
  */
 class Dish extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSearch;
 
     protected $fillable = [
         'restaurant_id',
@@ -58,5 +60,13 @@ class Dish extends Model
     public function menus(): BelongsToMany
     {
         return $this->belongsToMany(Menu::class, 'dish_menu');
+    }
+
+    /**
+     * @return string[]
+     */
+    public function searchFields(): array
+    {
+        return ['name', 'description', 'code'];
     }
 }
