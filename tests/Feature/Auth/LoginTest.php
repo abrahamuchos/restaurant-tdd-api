@@ -12,7 +12,7 @@ class LoginTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * Setup the test environment.
+     * Set up the test environment.
      * @return void
      */
     public function setUp(): void
