@@ -29,6 +29,7 @@ trait HasSort
         $sortDirection = $sortDirection ?: request()->get('sortDirection');
         $sortDirection = $sortDirection === 'asc' ? 'asc' : 'desc';
 
+        if(!$sortBy) return;
         if (!in_array($sortBy, $this->sortFields())) {
             abort(400, 'Invalid sortBy');
         }
