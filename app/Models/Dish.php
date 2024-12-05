@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\HasSearch;
+use App\Models\Traits\HasSort;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,11 +36,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
  * @property-read int|null                                                        $menus_count
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant search($search = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Restaurant sort($sortBy = '', $sortDirection = '')
  * @mixin \Eloquent
  */
 class Dish extends Model
 {
-    use HasFactory, HasSearch;
+    use HasFactory, HasSearch, HasSort;
 
     protected $fillable = [
         'restaurant_id',
@@ -68,5 +70,14 @@ class Dish extends Model
     public function searchFields(): array
     {
         return ['name', 'description', 'code'];
+    }
+
+    /**
+     * Fields to be sorted
+     * @return string[]
+     */
+    public function sortFields(): array
+    {
+        return ['id', 'name', 'description'];
     }
 }
