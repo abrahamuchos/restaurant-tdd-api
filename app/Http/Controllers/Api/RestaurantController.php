@@ -27,6 +27,7 @@ class RestaurantController extends Controller
         $user = auth()->user();
         $restaurants = Restaurant::where('user_id', $user->id)
             ->search()
+            ->sort()
             ->paginate($request->perPage ?? 15, ['*'], 'page', $request->page ?? 1);
 
         return RestaurantResource::collection($restaurants);
