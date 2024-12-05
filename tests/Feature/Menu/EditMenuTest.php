@@ -70,8 +70,10 @@ class EditMenuTest extends TestCase
                 'name',
                 'description',
                 'restaurantId',
-                'dishes' => [
-                    '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                'relationships' => [
+                    'dishes' => [
+                        '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ]
                 ]
             ]
         ]);
@@ -102,8 +104,10 @@ class EditMenuTest extends TestCase
                 'name',
                 'description',
                 'restaurantId',
-                'dishes' => [
-                    '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                'relationships' => [
+                    'dishes' => [
+                        '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ]
                 ]
             ]
         ]);
@@ -132,12 +136,14 @@ class EditMenuTest extends TestCase
                 'name',
                 'description',
                 'restaurantId',
-                'dishes' => [
-                    '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                'relationships' => [
+                    'dishes' => [
+                        '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ]
                 ]
             ]
         ]);
-        $response->assertJsonCount($this->newDishes->count(), 'data.dishes');
+        $response->assertJsonCount($this->newDishes->count(), 'data.relationships.dishes');
         foreach ($this->newDishes as $dish) {
             $this->assertDatabaseHas('dish_menu', [
                 'dish_id' => $dish->id,
@@ -165,12 +171,14 @@ class EditMenuTest extends TestCase
                 'name',
                 'description',
                 'restaurantId',
-                'dishes' => [
-                    '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                'relationships' => [
+                    'dishes' => [
+                        '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ]
                 ]
             ]
         ]);
-        $response->assertJsonCount($this->dishes->count(), 'data.dishes');
+        $response->assertJsonCount($this->dishes->count(), 'data.relationships.dishes');
         foreach ($this->dishes as $dish) {
             $this->assertDatabaseHas('dish_menu', [
                 'dish_id' => $dish->id,
@@ -197,12 +205,14 @@ class EditMenuTest extends TestCase
                 'name',
                 'description',
                 'restaurantId',
-                'dishes' => [
-                    '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                'relationships' => [
+                    'dishes' => [
+                        '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ]
                 ]
             ]
         ]);
-        $response->assertJsonCount(0, 'data.dishes');
+        $response->assertJsonCount(0, 'data.relationships.dishes');
     }
 
     public function test_menu_plates_should_not_be_duplicates()

@@ -61,8 +61,10 @@ class CreateMenuTest extends TestCase
                 'name',
                 'description',
                 'restaurantId',
-                'dishes' => [
-                    '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                'relationships' => [
+                    'dishes' => [
+                        '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ]
                 ]
             ]
         ]);
@@ -92,7 +94,9 @@ class CreateMenuTest extends TestCase
                 'name',
                 'description',
                 'restaurantId',
-                'dishes' => []
+                'relationships' => [
+                    'dishes' => []
+                ]
             ]
         ]);
         $this->assertDatabaseHas('menus', [
@@ -119,8 +123,10 @@ class CreateMenuTest extends TestCase
                 'name',
                 'description',
                 'restaurantId',
-                'dishes' => [
-                    '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                'relationships' => [
+                    'dishes' => [
+                        '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ]
                 ]
             ]
         ]);
@@ -178,10 +184,10 @@ class CreateMenuTest extends TestCase
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('menus', [
-           'id' => $response->json('data.id'),
-           'name' => $this->data['name'],
-           'description' => $this->data['description'],
-           'restaurant_id' => $this->data['restaurantId'],
+            'id' => $response->json('data.id'),
+            'name' => $this->data['name'],
+            'description' => $this->data['description'],
+            'restaurant_id' => $this->data['restaurantId'],
         ]);
         $this->assertDatabaseCount('dish_menu', 1);
     }
