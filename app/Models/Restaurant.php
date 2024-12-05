@@ -3,27 +3,28 @@
 namespace App\Models;
 
 use App\Models\Traits\HasSearch;
+use App\Models\Traits\HasSort;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
  *
- * @property int                             $id
- * @property int                             $user_id
- * @property string                          $code
- * @property string                          $name
- * @property string                          $description
- * @property string                          $address
- * @property string                          $phone
- * @property string                          $email
- * @property string                          $website
- * @property string|null                     $logo
- * @property string|null                     $image
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ *
+ * @property int                                                                  $id
+ * @property int                                                                  $user_id
+ * @property string                                                               $code
+ * @property string                                                               $name
+ * @property string                                                               $description
+ * @property string                                                               $address
+ * @property string                                                               $phone
+ * @property string                                                               $email
+ * @property string                                                               $website
+ * @property string|null                                                          $logo
+ * @property string|null                                                          $image
+ * @property \Illuminate\Support\Carbon|null                                      $created_at
+ * @property \Illuminate\Support\Carbon|null                                      $updated_at
  * @method static \Database\Factories\RestaurantFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant newQuery()
@@ -42,20 +43,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant whereWebsite($value)
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\User                                                $user
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant whereCode($value)
- * @property string $opening_hour
- * @property string $closing_hour
+ * @property string                                                               $opening_hour
+ * @property string                                                               $closing_hour
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dish> $dishes
- * @property-read int|null $dishes_count
+ * @property-read int|null                                                        $dishes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
- * @property-read int|null $menus_count
+ * @property-read int|null                                                        $menus_count
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant search($search = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Restaurant sort($sortBy ='', $sortDirection = '')
  * @mixin \Eloquent
  */
 class Restaurant extends Model
 {
-    use HasFactory, HasSearch;
+    use HasFactory, HasSearch, HasSort;
 
     protected $fillable = [
         'user_id',
@@ -101,6 +103,15 @@ class Restaurant extends Model
      */
     public function searchFields(): array
     {
-       return ['name', 'description', 'code'];
+        return ['name', 'description', 'code'];
+    }
+
+    /**
+     * Fields to be sorted
+     * @return string[]
+     */
+    public function sortFields(): array
+    {
+        return ['id', 'name', 'description'];
     }
 }

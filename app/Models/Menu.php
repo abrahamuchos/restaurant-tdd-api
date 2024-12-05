@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Models\Traits\HasSearch;
+use App\Models\Traits\HasSort;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * 
+ *
  *
  * @property int                                                                  $id
  * @property int                                                                  $restaurant_id
@@ -31,11 +32,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereRestaurantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant search($search = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Restaurant sort($sortBy = '', $sortDirection = '')
  * @mixin \Eloquent
  */
 class Menu extends Model
 {
-    use HasFactory, HasSearch;
+    use HasFactory, HasSearch, HasSort;
 
     protected $fillable = [
         'name',
@@ -64,5 +66,14 @@ class Menu extends Model
     public function searchFields(): array
     {
         return ['name', 'description', 'code'];
+    }
+
+    /**
+     * Fields to be sorted
+     * @return string[]
+     */
+    public function sortFields(): array
+    {
+        return ['id', 'name', 'description'];
     }
 }
