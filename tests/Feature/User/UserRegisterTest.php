@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\User;
 
+use App\Enums\Roles;
 use App\Models\User;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -17,7 +19,14 @@ class UserRegisterTest extends TestCase
         'password_confirmation' => 'password',
         'name' => 'Test User',
         'lastName' => 'Last Test User',
+        'roles' => [Roles::USER]
     ];
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(RoleSeeder::class);
+    }
 
     public function test_user_can_register(): void
     {

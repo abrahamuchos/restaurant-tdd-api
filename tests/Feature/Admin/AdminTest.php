@@ -15,8 +15,10 @@ use Tests\TestCase;
 class AdminTest extends TestCase
 {
     use RefreshDatabase;
+
     protected User|Collection|Model $admin;
     protected Restaurant|Collection|Model $restaurant;
+
 
     protected function setUp(): void
     {
