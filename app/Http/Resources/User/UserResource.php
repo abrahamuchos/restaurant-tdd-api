@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -11,7 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $last_name
  * @property string $email
  *
- * @method  getRolesNames()
+ * @method  getRoleNames()
  */
 class UserResource extends JsonResource
 {
@@ -27,7 +28,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'lastName' => $this->last_name,
             'email' => $this->email,
-            'roles' => $this->getRolesNames()
+            'roles' => $this->getRoleNames()
         ];
     }
 }

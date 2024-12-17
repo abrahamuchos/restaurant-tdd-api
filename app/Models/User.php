@@ -13,7 +13,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -113,7 +113,10 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims(): array
     {
-        return [];
+        return [
+            'roles' => $this->getRoleNames(),
+            'permissions' => $this->getAllPermissions()->pluck('name')->toArray(),
+        ];
     }
 
     /**

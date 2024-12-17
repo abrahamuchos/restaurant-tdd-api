@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -55,7 +56,9 @@ class UserController extends Controller
             ], 500);
         }
 
-        return response()->json([], 201);
+        return response()->json([
+            'data' => new UserResource($user)
+        ], 201);
     }
 
     /**
