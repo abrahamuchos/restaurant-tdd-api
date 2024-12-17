@@ -99,4 +99,11 @@ class UserController extends Controller
             return response()->json([], 404);
         }
     }
+
+    public function destroy(User $user): JsonResponse
+    {
+        $wasDeleted = $user->delete();
+
+        return $wasDeleted ? response()->json([], 204) : response()->json([], 404);
+    }
 }
