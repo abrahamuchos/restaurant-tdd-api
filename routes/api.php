@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Roles;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\UserController;
@@ -23,6 +24,8 @@ Route::group(['prefix' => 'v1'], function () {
         // Users
         Route::patch('profile', [UserController::class, 'update']);
         Route::patch('password', [UserController::class, 'updatePassword']);
+        Route::middleware('role:' . Roles::ADMIN->value)
+            ->delete('user/{user}', [UserController::class, 'destroy']);
 
         //Restaurants
         Route::apiResource('restaurants', RestaurantController::class);

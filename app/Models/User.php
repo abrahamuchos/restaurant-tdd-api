@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\Roles;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -125,5 +126,14 @@ class User extends Authenticatable implements JWTSubject
     public function restaurants(): HasMany
     {
         return $this->hasMany(Restaurant::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::created(function ($model){
+            $model->assignRole(Roles::USER);
+        });
     }
 }
