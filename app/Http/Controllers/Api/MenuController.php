@@ -42,9 +42,9 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Menu $menu)
+    public function show(Restaurant $restaurant, Menu $menu): MenuResource
     {
-        //
+        return new MenuResource($menu->load('dishes', 'restaurant'));
     }
 
     /**
