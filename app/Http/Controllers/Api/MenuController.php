@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
 use App\Http\Resources\Menu\MenuResource;
 use App\Models\Menu;
 use App\Models\Restaurant;
-use Illuminate\Support\Facades\Gate;
 
 class MenuController extends Controller
 {

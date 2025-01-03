@@ -2,10 +2,10 @@
 
 use App\Enums\Roles;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DishController;
+use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\DishController;
-use App\Http\Controllers\MenuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,5 +41,10 @@ Route::group(['prefix' => 'v1'], function () {
             });
 
     });
+
+    /*Public Routes*/
+    Route::get('menus/{menu:id}', [App\Http\Controllers\Api\Public\MenuController::class, 'show'])
+    ->name('public.menus.show');
+
 
 });

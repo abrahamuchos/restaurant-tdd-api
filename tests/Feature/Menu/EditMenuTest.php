@@ -69,7 +69,6 @@ class EditMenuTest extends TestCase
                 'id',
                 'name',
                 'description',
-                'restaurantId',
                 'relationships' => [
                     'dishes' => [
                         '*' => ['id', 'name', 'description', 'price', 'restaurantId']
