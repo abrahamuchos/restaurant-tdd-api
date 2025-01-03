@@ -22,7 +22,7 @@ class AdminTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+
         $this->admin = User::factory()->create();
         $this->admin->assignRole(Roles::ADMIN);
         $this->restaurant = Restaurant::factory()->create();

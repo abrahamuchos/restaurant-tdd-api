@@ -21,12 +21,6 @@ class UserRegisterTest extends TestCase
         'roles' => [Roles::USER]
     ];
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->seed(RoleSeeder::class);
-    }
-
     public function test_user_can_register(): void
     {
         $this->withoutExceptionHandling();

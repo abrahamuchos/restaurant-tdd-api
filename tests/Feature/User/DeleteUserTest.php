@@ -19,7 +19,6 @@ class DeleteUserTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(Roles::ADMIN);
         $this->user = User::factory()->create();
     }
