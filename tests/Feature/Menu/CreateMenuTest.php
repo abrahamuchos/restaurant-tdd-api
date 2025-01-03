@@ -57,17 +57,38 @@ class CreateMenuTest extends TestCase
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
-                'restaurantId',
                 'relationships' => [
                     'dishes' => [
                         '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ],
+                    'restaurant' => [
+                        'id',
+                        'name'
                     ]
+                ],
+                'links' => [
+                    'self',
+                    'parent',
+                    'public',
                 ]
             ]
         ]);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.menus.show', [$this->restaurant->id, $response->json('data.id')])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
+        $response->assertJsonPath(
+            'data.links.public',
+            route('public.menus.show', $response->json('data.id'))
+        );
         $this->assertDatabaseHas('menus', [
             'id' => $response->json('data.id'),
             'name' => $this->data['name'],
@@ -90,15 +111,38 @@ class CreateMenuTest extends TestCase
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
-                'restaurantId',
                 'relationships' => [
-                    'dishes' => []
+                    'dishes' => [
+                        '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ],
+                    'restaurant' => [
+                        'id',
+                        'name'
+                    ]
+                ],
+                'links' => [
+                    'self',
+                    'parent',
+                    'public',
                 ]
             ]
         ]);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.menus.show', [$this->restaurant->id, $response->json('data.id')])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
+        $response->assertJsonPath(
+            'data.links.public',
+            route('public.menus.show', $response->json('data.id'))
+        );
         $this->assertDatabaseHas('menus', [
             'id' => $response->json('data.id'),
             'name' => $this->data['name'],
@@ -119,17 +163,38 @@ class CreateMenuTest extends TestCase
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
-                'restaurantId',
                 'relationships' => [
                     'dishes' => [
                         '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ],
+                    'restaurant' => [
+                        'id',
+                        'name'
                     ]
+                ],
+                'links' => [
+                    'self',
+                    'parent',
+                    'public',
                 ]
             ]
         ]);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.menus.show', [$this->restaurant->id, $response->json('data.id')])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
+        $response->assertJsonPath(
+            'data.links.public',
+            route('public.menus.show', $response->json('data.id'))
+        );
         $this->assertDatabaseHas('menus', [
             'id' => $response->json('data.id'),
             'name' => $this->data['name'],
