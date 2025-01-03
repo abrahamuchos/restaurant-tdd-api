@@ -27,8 +27,11 @@ class ListMenusTest extends TestCase
         $this->perPage = 15;
         $this->restaurant = Restaurant::factory()->create();
         $this->user = $this->restaurant->user;
-        //Todo: revisar si es necesario que el dish tenga un restaurant_id igual
-        $this->dishes = Dish::factory()->count(100)->create();
+        $this->dishes = Dish::factory()
+            ->count(100)
+            ->create([
+                'restaurant_id' => $this->restaurant->id,
+            ]);
         $this->menu = Menu::factory(150)
             ->hasAttached($this->dishes->random(10))
             ->create([

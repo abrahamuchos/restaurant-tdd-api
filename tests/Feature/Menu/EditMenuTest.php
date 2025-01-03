@@ -66,16 +66,38 @@ class EditMenuTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
                 'relationships' => [
                     'dishes' => [
                         '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ],
+                    'restaurant' => [
+                        'id',
+                        'name'
                     ]
+                ],
+                'links' => [
+                    'self',
+                    'parent',
+                    'public',
                 ]
             ]
         ]);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.menus.show', [$this->restaurant->id, $this->menu->id])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
+        $response->assertJsonPath(
+            'data.links.public',
+            route('public.menus.show', $this->menu->id)
+        );
         $response->assertJsonPath('data.name', $this->data['name']);
         $this->assertDatabaseHas('menus', [
             'id' => $this->menu->id,
@@ -99,17 +121,39 @@ class EditMenuTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
-                'restaurantId',
                 'relationships' => [
                     'dishes' => [
                         '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ],
+                    'restaurant' => [
+                        'id',
+                        'name'
                     ]
+                ],
+                'links' => [
+                    'self',
+                    'parent',
+                    'public',
                 ]
             ]
         ]);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.menus.show', [$this->restaurant->id, $this->menu->id])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
+        $response->assertJsonPath(
+            'data.links.public',
+            route('public.menus.show', $this->menu->id)
+        );
+        $response->assertJsonPath('data.name', $menuName['name']);
         $this->assertDatabaseHas('menus', [
             'id' => $this->menu->id,
             'name' => $menuName['name'],
@@ -131,14 +175,23 @@ class EditMenuTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
-                'restaurantId',
                 'relationships' => [
                     'dishes' => [
                         '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ],
+                    'restaurant' => [
+                        'id',
+                        'name'
                     ]
+                ],
+                'links' => [
+                    'self',
+                    'parent',
+                    'public',
                 ]
             ]
         ]);
@@ -166,14 +219,23 @@ class EditMenuTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
-                'restaurantId',
                 'relationships' => [
                     'dishes' => [
                         '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ],
+                    'restaurant' => [
+                        'id',
+                        'name'
                     ]
+                ],
+                'links' => [
+                    'self',
+                    'parent',
+                    'public',
                 ]
             ]
         ]);
@@ -200,14 +262,23 @@ class EditMenuTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
+                'type',
                 'id',
                 'name',
                 'description',
-                'restaurantId',
                 'relationships' => [
                     'dishes' => [
                         '*' => ['id', 'name', 'description', 'price', 'restaurantId']
+                    ],
+                    'restaurant' => [
+                        'id',
+                        'name'
                     ]
+                ],
+                'links' => [
+                    'self',
+                    'parent',
+                    'public',
                 ]
             ]
         ]);

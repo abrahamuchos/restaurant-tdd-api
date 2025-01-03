@@ -62,6 +62,40 @@ class SearchMenuTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');
         $response->assertJsonPath('data.0.description', $this->menu->description);
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'type',
+                    'id',
+                    'name',
+                    'description',
+                    'links',
+                    'relationships'
+                ]
+            ],
+            'meta' => [
+                'current_page',
+                'from',
+                'last_page',
+                'links' => [
+                    '*' => [
+                        'url',
+                        'label',
+                        'active'
+                    ]
+                ],
+                'path',
+                'per_page',
+                'to',
+                'total'
+            ],
+            'links' => [
+                'first',
+                'last',
+                'prev',
+                'next'
+            ]
+        ]);
     }
 
 
