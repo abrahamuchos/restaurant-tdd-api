@@ -5,6 +5,7 @@ namespace Tests\Feature\Menu;
 use App\Models\Dish;
 use App\Models\Menu;
 use App\Models\Restaurant;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
@@ -26,6 +27,7 @@ class ListMenusTest extends TestCase
         $this->perPage = 15;
         $this->restaurant = Restaurant::factory()->create();
         $this->user = $this->restaurant->user;
+        //Todo: revisar si es necesario que el dish tenga un restaurant_id igual
         $this->dishes = Dish::factory()->count(100)->create();
         $this->menu = Menu::factory(150)
             ->hasAttached($this->dishes->random(10))
@@ -56,6 +58,10 @@ class ListMenusTest extends TestCase
         $response->assertJsonPath(
             'data.0.links.self',
             route('restaurants.menus.show', [$this->restaurant->id, $this->menu->first()->id])
+        );
+        $response->assertJsonPath(
+            'data.0.links.public',
+            route('public.menus.show', $this->menu->first()->id)
         );
         $response->assertJsonPath(
             'data.0.links.parent',

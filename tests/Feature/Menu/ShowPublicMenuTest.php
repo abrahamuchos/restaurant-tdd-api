@@ -21,14 +21,30 @@ class ShowPublicMenuTest extends TestCase
     {
         parent::setUp();
         $this->restaurant = Restaurant::factory()->create();
-        $this->dishes = Dish::factory()->count(100)->create([
+        $this->dishes = Dish::factory()->count(15)->create([
             'restaurant_id' => $this->restaurant->id,
         ]);
-        $this->menu = Menu::factory(150)
-            ->hasAttached($this->dishes->random(10))
+        $this->menu = Menu::factory()
+            ->hasAttached($this->dishes)
             ->create([
                 'restaurant_id' => $this->restaurant->id,
             ]);
 
+    }
+
+    public function test_public_menu_is_returned_with_dishes()
+    {
+        $response = $this->getJson(route('public.menus.show', $this->menu->id));
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'type',
+                'id',
+                'name',
+                'description',
+            ]
+        ]);
+        $response->assertJsonPath('data.name', $this->menu->name);
     }
 }
