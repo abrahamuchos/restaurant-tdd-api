@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\User;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Testing\TestResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -10,6 +11,13 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 abstract class TestCase extends BaseTestCase
 {
     protected string $apiBase = "/api/v1";
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed(RoleSeeder::class);
+    }
 
     /**
      * @param User|\Illuminate\Database\Eloquent\   $user
