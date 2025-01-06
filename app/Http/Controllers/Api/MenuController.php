@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
 use App\Http\Resources\Menu\MenuResource;
+use App\Jobs\GenerateQrJob;
 use App\Models\Menu;
 use App\Models\Restaurant;
 
@@ -35,6 +36,9 @@ class MenuController extends Controller
          */
         $menu = $restaurant->menus()->create($request->only('name', 'description'));
         $menu->dishes()->sync($request->input('dishes', []));
+
+        //Generate QR code for menu
+//        GenerateQrJob::dispatch($menu);
 
         return new MenuResource($menu->load('dishes', 'restaurant'));
     }
