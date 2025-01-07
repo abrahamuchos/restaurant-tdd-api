@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Menu;
 
+use App\Jobs\GenerateQrJob;
 use App\Models\Dish;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class CreateMenuTest extends TestCase
@@ -33,6 +35,7 @@ class CreateMenuTest extends TestCase
             'restaurantId' => $this->restaurant->id,
             'dishes' => $this->dishes->pluck('id')->toArray(),
         ];
+        Queue::fake();
     }
 
     public function test_unauthenticated_user_cannot_create_menu()
@@ -47,6 +50,8 @@ class CreateMenuTest extends TestCase
 
     public function test_authenticated_user_can_create_menu_for_their_restaurant()
     {
+//        Queue::fake();
+
         $response = $this->apiAs(
             $this->user,
             'post',
@@ -95,6 +100,7 @@ class CreateMenuTest extends TestCase
             'description' => $this->data['description'],
             'restaurant_id' => $this->data['restaurantId'],
         ]);
+        Queue::assertPushed(GenerateQrJob::class, 1);
     }
 
     public function test_authenticated_user_can_create_menu_with_empty_dishes()

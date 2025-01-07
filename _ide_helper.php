@@ -18168,6 +18168,146 @@ namespace Illuminate\Support\Facades {
             }
     }
 
+namespace LaravelQRCode\Facades {
+            /**
+     * Class QRCode
+     * 
+     * Laravel QR Code Generator is distributed under MIT
+     * Copyright (C) 2018 Bruno Vaula Werneck <brunovaulawerneck at gmail dot com>
+     *
+     * @package LaravelQRCode\Facades
+     */        class QRCode {
+                    /**
+         * Returns as QR_CalendarEvent object
+         *
+         * @param \DateTime $start
+         * @param \DateTime $end
+         * @param string $summary
+         * @param string $description
+         * @param string $location
+         * @return \QR_Code\Types\QR_CalendarEvent 
+         * @throws \QR_Code\Exceptions\EmptyEventSummaryException
+         * @throws \QR_Code\Exceptions\InvalidEventDateException
+         * @static 
+         */        public static function calendar($start, $end, $summary, $description, $location)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->calendar($start, $end, $summary, $description, $location);
+        }
+                    /**
+         * Returns a QR_EmailMessage object
+         *
+         * @param string $toEmail
+         * @param string $body
+         * @param string $subject
+         * @return \QR_Code\Types\QR_EmailMessage 
+         * @throws \LaravelQRCode\Exceptions\EmptyTextException
+         * @static 
+         */        public static function email($toEmail, $body, $subject)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->email($toEmail, $body, $subject);
+        }
+                    /**
+         * Returns a QR_meCard object
+         *
+         * @param string $name
+         * @param string $address
+         * @param string $phone
+         * @param string $email
+         * @return \QR_Code\Types\QR_meCard 
+         * @static 
+         */        public static function meCard($name, $address, $phone, $email)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->meCard($name, $address, $phone, $email);
+        }
+                    /**
+         * Returns a QR_Phone object
+         *
+         * @param string $number
+         * @return \QR_Code\Types\QR_Phone 
+         * @static 
+         */        public static function phone($number)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->phone($number);
+        }
+                    /**
+         * Return a QR_Sms object
+         *
+         * @param string $number
+         * @param string $text
+         * @return \QR_Code\Types\QR_Sms 
+         * @static 
+         */        public static function sms($number, $text)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->sms($number, $text);
+        }
+                    /**
+         * Returns a QR_Text object
+         *
+         * @param string $data
+         * @return \QR_Code\Types\QR_Text 
+         * @throws \LaravelQRCode\Exceptions\EmptyTextException
+         * @static 
+         */        public static function text($data)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->text($data);
+        }
+                    /**
+         * Returns a QR_Url object
+         *
+         * @param string $url
+         * @return \QR_Code\Types\QR_Url 
+         * @throws \LaravelQRCode\Exceptions\EmptyTextException
+         * @throws \LaravelQRCode\Exceptions\MalformedUrlException
+         * @static 
+         */        public static function url($url = null)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->url($url);
+        }
+                    /**
+         * Returns a QR_VCard object
+         *
+         * @param string $firstName
+         * @param string $lastName
+         * @param string $title Miss, Mrs., Mr., Doctor, etc
+         * @param string $email
+         * @param string $company
+         * @param string $job
+         * @param string $url
+         * @param array $addresses
+         * @param array $phones
+         * @return \QR_Code\Types\QR_VCard 
+         * @throws \QR_Code\Exceptions\InvalidVCardAddressEntryException
+         * @throws \QR_Code\Exceptions\InvalidVCardPhoneEntryException
+         * @static 
+         */        public static function vCard($firstName = null, $lastName = null, $title = null, $email = null, $company = null, $job = null, $url = null, $addresses = [], $phones = [])
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->vCard($firstName, $lastName, $title, $email, $company, $job, $url, $addresses, $phones);
+        }
+                    /**
+         * Returns a QR_WiFi object
+         *
+         * @param string $authType
+         * @param string $ssId
+         * @param string $password
+         * @param bool $ssdIDisHidden
+         * @return \QR_Code\Types\QR_WiFi 
+         * @static 
+         */        public static function wifi($authType, $ssId, $password, $ssdIDisHidden)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->wifi($authType, $ssId, $password, $ssdIDisHidden);
+        }
+            }
+    }
+
 namespace Tymon\JWTAuth\Facades {
             /**
      * 
@@ -22391,6 +22531,7 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
+            class QRCode extends \LaravelQRCode\Facades\QRCode {}
             class JWTAuth extends \Tymon\JWTAuth\Facades\JWTAuth {}
             class JWTFactory extends \Tymon\JWTAuth\Facades\JWTFactory {}
     }

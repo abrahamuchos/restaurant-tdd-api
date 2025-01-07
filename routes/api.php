@@ -46,5 +46,4 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('menus/{menu:id}', [App\Http\Controllers\Api\Public\MenuController::class, 'show'])
     ->name('public.menus.show');
 
-
 });
