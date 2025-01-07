@@ -38,7 +38,7 @@ class MenuController extends Controller
         $menu->dishes()->sync($request->input('dishes', []));
 
         //Generate QR code for menu
-//        GenerateQrJob::dispatch($menu);
+        GenerateQrJob::dispatch($menu);
 
         return new MenuResource($menu->load('dishes', 'restaurant'));
     }
@@ -62,7 +62,7 @@ class MenuController extends Controller
     {
         $menu->update($request->only('name', 'description'));
 
-        if( $request->has('dishes') ) {
+        if ($request->has('dishes')) {
             $menu->dishes()->sync($request->input('dishes'));
         }
 

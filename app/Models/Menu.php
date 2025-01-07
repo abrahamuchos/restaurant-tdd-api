@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * 
+ *
  *
  * @property int                                                                  $id
  * @property int                                                                  $restaurant_id
@@ -42,6 +42,7 @@ class Menu extends Model
     protected $fillable = [
         'name',
         'description',
+        'qr'
     ];
 
     /**

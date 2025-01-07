@@ -8,8 +8,12 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use LaravelQRCode\Exceptions\EmptyTextException;
+use LaravelQRCode\Exceptions\MalformedUrlException;
+use LaravelQRCode\Facades\QRCode;
 
 class GenerateQrJob implements ShouldQueue
 {
@@ -28,12 +32,26 @@ class GenerateQrJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $url = route('public.menus.show', $this->menu);
-        $qr = QrCode::format('png')->size(500)->maring(10)->generate($url);
-        $name = Storage::disk('public')->put('qr', $qr);
+        try {
+            $url = route('public.menus.show', $this->menu);
+            $filename = uniqid($this->menu->id . '_').'.svg';
+            $path = Storage::disk("public")->path($filename);
+            QRCode::text($url)->setOutfile($path)->svg();
 
-        $this->menu->update([
-           'qr' => $name
-        ]);
+            // Save to database qr code
+            $this->menu->update([
+                'qr' => $filename
+            ]);
+
+        } catch (EmptyTextException $e) {
+            Log::error(
+                'Message: {message}  | File: {file} | Line: {line} | Database rollback transaction',
+                [
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
+                ]
+            );
+        }
     }
 }

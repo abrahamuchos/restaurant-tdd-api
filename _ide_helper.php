@@ -18168,282 +18168,142 @@ namespace Illuminate\Support\Facades {
             }
     }
 
-namespace SimpleSoftwareIO\QrCode\Facades {
+namespace LaravelQRCode\Facades {
             /**
+     * Class QRCode
      * 
+     * Laravel QR Code Generator is distributed under MIT
+     * Copyright (C) 2018 Bruno Vaula Werneck <brunovaulawerneck at gmail dot com>
      *
-     */        class QrCode {
+     * @package LaravelQRCode\Facades
+     */        class QRCode {
                     /**
-         * Generates the QrCode.
+         * Returns as QR_CalendarEvent object
          *
+         * @param \DateTime $start
+         * @param \DateTime $end
+         * @param string $summary
+         * @param string $description
+         * @param string $location
+         * @return \QR_Code\Types\QR_CalendarEvent 
+         * @throws \QR_Code\Exceptions\EmptyEventSummaryException
+         * @throws \QR_Code\Exceptions\InvalidEventDateException
+         * @static 
+         */        public static function calendar($start, $end, $summary, $description, $location)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->calendar($start, $end, $summary, $description, $location);
+        }
+                    /**
+         * Returns a QR_EmailMessage object
+         *
+         * @param string $toEmail
+         * @param string $body
+         * @param string $subject
+         * @return \QR_Code\Types\QR_EmailMessage 
+         * @throws \LaravelQRCode\Exceptions\EmptyTextException
+         * @static 
+         */        public static function email($toEmail, $body, $subject)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->email($toEmail, $body, $subject);
+        }
+                    /**
+         * Returns a QR_meCard object
+         *
+         * @param string $name
+         * @param string $address
+         * @param string $phone
+         * @param string $email
+         * @return \QR_Code\Types\QR_meCard 
+         * @static 
+         */        public static function meCard($name, $address, $phone, $email)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->meCard($name, $address, $phone, $email);
+        }
+                    /**
+         * Returns a QR_Phone object
+         *
+         * @param string $number
+         * @return \QR_Code\Types\QR_Phone 
+         * @static 
+         */        public static function phone($number)
+        {
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->phone($number);
+        }
+                    /**
+         * Return a QR_Sms object
+         *
+         * @param string $number
          * @param string $text
-         * @param string|null $filename
-         * @return void|\Illuminate\Support\HtmlString|string 
-         * @throws WriterException
-         * @throws InvalidArgumentException
+         * @return \QR_Code\Types\QR_Sms 
          * @static 
-         */        public static function generate($text, $filename = null)
+         */        public static function sms($number, $text)
         {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->generate($text, $filename);
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->sms($number, $text);
         }
                     /**
-         * Merges an image over the QrCode.
+         * Returns a QR_Text object
          *
-         * @param string $filepath
-         * @param float $percentage
-         * @param \SimpleSoftwareIO\QrCode\SimpleSoftwareIO\QrCode\boolean|bool $absolute
-         * @return \Generator 
+         * @param string $data
+         * @return \QR_Code\Types\QR_Text 
+         * @throws \LaravelQRCode\Exceptions\EmptyTextException
          * @static 
-         */        public static function merge($filepath, $percentage = 0.2, $absolute = false)
+         */        public static function text($data)
         {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->merge($filepath, $percentage, $absolute);
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->text($data);
         }
                     /**
-         * Merges an image string with the center of the QrCode.
+         * Returns a QR_Url object
          *
-         * @param string $content
-         * @param float $percentage
-         * @return \Generator 
+         * @param string $url
+         * @return \QR_Code\Types\QR_Url 
+         * @throws \LaravelQRCode\Exceptions\EmptyTextException
+         * @throws \LaravelQRCode\Exceptions\MalformedUrlException
          * @static 
-         */        public static function mergeString($content, $percentage = 0.2)
+         */        public static function url($url = null)
         {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->mergeString($content, $percentage);
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->url($url);
         }
                     /**
-         * Sets the size of the QrCode.
+         * Returns a QR_VCard object
          *
-         * @param int $pixels
-         * @return \Generator 
+         * @param string $firstName
+         * @param string $lastName
+         * @param string $title Miss, Mrs., Mr., Doctor, etc
+         * @param string $email
+         * @param string $company
+         * @param string $job
+         * @param string $url
+         * @param array $addresses
+         * @param array $phones
+         * @return \QR_Code\Types\QR_VCard 
+         * @throws \QR_Code\Exceptions\InvalidVCardAddressEntryException
+         * @throws \QR_Code\Exceptions\InvalidVCardPhoneEntryException
          * @static 
-         */        public static function size($pixels)
+         */        public static function vCard($firstName = null, $lastName = null, $title = null, $email = null, $company = null, $job = null, $url = null, $addresses = [], $phones = [])
         {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->size($pixels);
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->vCard($firstName, $lastName, $title, $email, $company, $job, $url, $addresses, $phones);
         }
                     /**
-         * Sets the format of the QrCode.
+         * Returns a QR_WiFi object
          *
-         * @param string $format
-         * @return \Generator 
-         * @throws InvalidArgumentException
+         * @param string $authType
+         * @param string $ssId
+         * @param string $password
+         * @param bool $ssdIDisHidden
+         * @return \QR_Code\Types\QR_WiFi 
          * @static 
-         */        public static function format($format)
+         */        public static function wifi($authType, $ssId, $password, $ssdIDisHidden)
         {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->format($format);
-        }
-                    /**
-         * Sets the foreground color of the QrCode.
-         *
-         * @param int $red
-         * @param int $green
-         * @param int $blue
-         * @param null|int $alpha
-         * @return \Generator 
-         * @static 
-         */        public static function color($red, $green, $blue, $alpha = null)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->color($red, $green, $blue, $alpha);
-        }
-                    /**
-         * Sets the background color of the QrCode.
-         *
-         * @param int $red
-         * @param int $green
-         * @param int $blue
-         * @param null|int $alpha
-         * @return \Generator 
-         * @static 
-         */        public static function backgroundColor($red, $green, $blue, $alpha = null)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->backgroundColor($red, $green, $blue, $alpha);
-        }
-                    /**
-         * Sets the eye color for the provided eye index.
-         *
-         * @param int $eyeNumber
-         * @param int $innerRed
-         * @param int $innerGreen
-         * @param int $innerBlue
-         * @param int $outterRed
-         * @param int $outterGreen
-         * @param int $outterBlue
-         * @return \Generator 
-         * @throws InvalidArgumentException
-         * @static 
-         */        public static function eyeColor($eyeNumber, $innerRed, $innerGreen, $innerBlue, $outterRed = 0, $outterGreen = 0, $outterBlue = 0)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->eyeColor($eyeNumber, $innerRed, $innerGreen, $innerBlue, $outterRed, $outterGreen, $outterBlue);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function gradient($startRed, $startGreen, $startBlue, $endRed, $endGreen, $endBlue, $type)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->gradient($startRed, $startGreen, $startBlue, $endRed, $endGreen, $endBlue, $type);
-        }
-                    /**
-         * Sets the eye style.
-         *
-         * @param string $style
-         * @return \Generator 
-         * @throws InvalidArgumentException
-         * @static 
-         */        public static function eye($style)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->eye($style);
-        }
-                    /**
-         * Sets the style of the blocks for the QrCode.
-         *
-         * @param string $style
-         * @param float $size
-         * @return \Generator 
-         * @throws InvalidArgumentException
-         * @static 
-         */        public static function style($style, $size = 0.5)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->style($style, $size);
-        }
-                    /**
-         * Sets the encoding for the QrCode.
-         * 
-         * Possible values are
-         * ISO-8859-2, ISO-8859-3, ISO-8859-4, ISO-8859-5, ISO-8859-6,
-         * ISO-8859-7, ISO-8859-8, ISO-8859-9, ISO-8859-10, ISO-8859-11,
-         * ISO-8859-12, ISO-8859-13, ISO-8859-14, ISO-8859-15, ISO-8859-16,
-         * SHIFT-JIS, WINDOWS-1250, WINDOWS-1251, WINDOWS-1252, WINDOWS-1256,
-         * UTF-16BE, UTF-8, ASCII, GBK, EUC-KR.
-         *
-         * @param string $encoding
-         * @return \Generator 
-         * @static 
-         */        public static function encoding($encoding)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->encoding($encoding);
-        }
-                    /**
-         * Sets the error correction for the QrCode.
-         * 
-         * L: 7% loss.
-         * M: 15% loss.
-         * Q: 25% loss.
-         * H: 30% loss.
-         *
-         * @param string $errorCorrection
-         * @return \Generator 
-         * @static 
-         */        public static function errorCorrection($errorCorrection)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->errorCorrection($errorCorrection);
-        }
-                    /**
-         * Sets the margin of the QrCode.
-         *
-         * @param int $margin
-         * @return \Generator 
-         * @static 
-         */        public static function margin($margin)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->margin($margin);
-        }
-                    /**
-         * Fetches the Writer.
-         *
-         * @param \BaconQrCode\Renderer\ImageRenderer $renderer
-         * @return \BaconQrCode\Writer 
-         * @static 
-         */        public static function getWriter($renderer)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->getWriter($renderer);
-        }
-                    /**
-         * Fetches the Image Renderer.
-         *
-         * @return \BaconQrCode\Renderer\ImageRenderer 
-         * @static 
-         */        public static function getRenderer()
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->getRenderer();
-        }
-                    /**
-         * Returns the Renderer Style.
-         *
-         * @return \BaconQrCode\Renderer\RendererStyle\RendererStyle 
-         * @static 
-         */        public static function getRendererStyle()
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->getRendererStyle();
-        }
-                    /**
-         * Fetches the formatter.
-         *
-         * @return \BaconQrCode\Renderer\Image\ImageBackEndInterface 
-         * @static 
-         */        public static function getFormatter()
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->getFormatter();
-        }
-                    /**
-         * Fetches the module.
-         *
-         * @return \BaconQrCode\Renderer\Module\ModuleInterface 
-         * @static 
-         */        public static function getModule()
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->getModule();
-        }
-                    /**
-         * Fetches the eye style.
-         *
-         * @return \BaconQrCode\Renderer\Eye\EyeInterface 
-         * @static 
-         */        public static function getEye()
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->getEye();
-        }
-                    /**
-         * Fetches the color fill.
-         *
-         * @return \BaconQrCode\Renderer\RendererStyle\Fill 
-         * @static 
-         */        public static function getFill()
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->getFill();
-        }
-                    /**
-         * Creates a RGB or Alpha channel color.
-         *
-         * @param int $red
-         * @param int $green
-         * @param int $blue
-         * @param null|int $alpha
-         * @return \BaconQrCode\Renderer\Color\ColorInterface 
-         * @static 
-         */        public static function createColor($red, $green, $blue, $alpha = null)
-        {
-                        /** @var \SimpleSoftwareIO\QrCode\Generator $instance */
-                        return $instance->createColor($red, $green, $blue, $alpha);
+                        /** @var \LaravelQRCode\QRCodeFactory $instance */
+                        return $instance->wifi($authType, $ssId, $password, $ssdIDisHidden);
         }
             }
     }
@@ -22671,7 +22531,7 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
-            class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
+            class QRCode extends \LaravelQRCode\Facades\QRCode {}
             class JWTAuth extends \Tymon\JWTAuth\Facades\JWTAuth {}
             class JWTFactory extends \Tymon\JWTAuth\Facades\JWTFactory {}
     }
