@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use LaravelQRCode\Exceptions\EmptyTextException;
 use LaravelQRCode\Exceptions\MalformedUrlException;
 use LaravelQRCode\Facades\QRCode;
+use PharIo\Version\Exception;
 
 class GenerateQrJob implements ShouldQueue
 {
@@ -33,9 +34,9 @@ class GenerateQrJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            $url = route('public.menus.show', $this->menu);
-            $filename = uniqid($this->menu->id . '_').'.svg';
-            $path = Storage::disk("public")->path($filename);
+            $url = config('app.frontendUrl') . '/' . $this->menu->id;
+            $filename = uniqid($this->menu->id . '_') . '.svg';
+            $path = Storage::disk("public-qr")->path($filename);
             QRCode::text($url)->setOutfile($path)->svg();
 
             // Save to database qr code
