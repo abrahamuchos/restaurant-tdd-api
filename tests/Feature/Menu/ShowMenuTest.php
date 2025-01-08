@@ -70,6 +70,7 @@ class ShowMenuTest extends TestCase
                     'self',
                     'parent',
                     'public',
+                    'qr'
                 ]
             ]
         ]);
@@ -85,6 +86,7 @@ class ShowMenuTest extends TestCase
             'data.links.public',
             route('public.menus.show', $this->menu->id)
         );
+        $response->assertJsonPath('data.links.qr', $this->menu->qr);
     }
 
 

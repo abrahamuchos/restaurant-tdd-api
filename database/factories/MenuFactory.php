@@ -20,7 +20,8 @@ class MenuFactory extends Factory
         return [
             'name' => fake()->name,
             'description' => fake()->text(100),
-            'restaurant_id' => fn () => Restaurant::factory()->create()
+            'restaurant_id' => fn () => Restaurant::factory()->create(),
+            'qr' => 'test.svg'
         ];
     }
 }
