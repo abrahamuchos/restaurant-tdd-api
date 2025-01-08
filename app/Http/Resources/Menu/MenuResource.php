@@ -12,6 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int                                                                  $restaurant_id
  * @property string                                                               $name
  * @property string                                                               $description
+ * @property string|null                                                          $qr
  * @property \Illuminate\Support\Carbon|null                                      $created_at
  * @property \Illuminate\Support\Carbon|null                                      $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dish> $dishes
@@ -38,7 +39,8 @@ class MenuResource extends JsonResource
             'links' => [
                 'self' => route('restaurants.menus.show', [$this->restaurant_id, $this->id]),
                 'parent' => route('restaurants.show', $this->restaurant_id),
-                'public' => route('public.menus.show', $this->id)
+                'public' => route('public.menus.show', $this->id),
+                'qr' => $this->qr,
             ],
             'relationships' => [
                 'dishes' => DishResource::collection($this->whenLoaded('dishes')),

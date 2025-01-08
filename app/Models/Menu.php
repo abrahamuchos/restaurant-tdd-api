@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Models\Traits\HasSearch;
 use App\Models\Traits\HasSort;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 
 /**
  *
@@ -76,5 +78,10 @@ class Menu extends Model
     public function sortFields(): array
     {
         return ['id', 'name', 'description'];
+    }
+
+    public function qr(): Attribute
+    {
+        return Attribute::get(fn($attr) => $attr ? Storage::disk('public-qr')->url($attr) : null);
     }
 }
