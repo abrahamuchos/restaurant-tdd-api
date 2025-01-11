@@ -28,6 +28,13 @@ class AuthController extends Controller
         return $this->_respondWithToken($token);
     }
 
+    public function logout(): JsonResponse
+    {
+        auth()->logout();
+
+        return response()->json(null, 204);
+    }
+
     /**
      * @param Request $request
      *

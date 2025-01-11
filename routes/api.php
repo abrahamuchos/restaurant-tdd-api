@@ -21,6 +21,9 @@ Route::group(['prefix' => 'v1'], function () {
 
     /** Protected Routes */
     Route::middleware('auth:api')->group(function () {
+        //Auth
+        Route::get('logout', [AuthController::class, 'logout']);
+
         // Users
         Route::patch('profile', [UserController::class, 'update']);
         Route::patch('password', [UserController::class, 'updatePassword']);
