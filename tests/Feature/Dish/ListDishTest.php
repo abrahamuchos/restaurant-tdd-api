@@ -54,6 +54,7 @@ class ListDishTest extends TestCase
                     'description',
                     'price',
                     'isAvailable',
+                    'image',
                     'createdAt',
                     'updatedAt',
                     'links',
