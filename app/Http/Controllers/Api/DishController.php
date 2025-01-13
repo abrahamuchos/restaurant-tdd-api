@@ -10,6 +10,7 @@ use App\Http\Resources\Dish\DishResource;
 use App\Models\Dish;
 use App\Models\Restaurant;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
@@ -44,15 +45,15 @@ class DishController extends Controller
      * @param Restaurant       $restaurant
      * @param StoreDishRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      * @throws \Throwable
      */
-    public function store(Restaurant $restaurant, StoreDishRequest $request): \Illuminate\Http\JsonResponse
+    public function store(Restaurant $restaurant, StoreDishRequest $request): JsonResponse
     {
         DB::beginTransaction();
 
-        try{
+        try {
             if ($request->image) {
                 list($data, $extension) = Base64Helper::getDataImage($request->image);
                 $filename = uniqid() . '.' . $extension;
@@ -72,7 +73,7 @@ class DishController extends Controller
 
             return response()->json([], 201);
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
 
             return response()->json([
@@ -104,22 +105,52 @@ class DishController extends Controller
      *
      * @return DishResource
      * @throws AuthorizationException
+     * @throws \Throwable
      */
-    public function update(UpdateDishRequest $request, Restaurant $restaurant, Dish $dish): DishResource
+    public function update(UpdateDishRequest $request, Restaurant $restaurant, Dish $dish): DishResource|JsonResponse
     {
-        $dish->update($request->all());
+        DB::beginTransaction();
+        try {
+            $data = $request->except('image');
+            if ($request->image) {
+                list($dataImg, $extension) = Base64Helper::getDataImage($request->image);
+                $filename = uniqid() . '.' . $extension;
+                $path = 'restaurants/' . $restaurant->id . '/dishes/' . $filename;
+                $data['image'] = $filename;
+                Storage::disk('public')->put($path, $dataImg);
 
-        return new DishResource($dish->load('menus'));
+                //Remove old image
+                if ($dish->image_path) {
+                    Storage::disk('public')->delete($dish->image_path);
+                }
+            }
+            $dish->update($data);
+            DB::commit();
+
+            return new DishResource($dish->load('menus'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'error' => true,
+                'code' => 5050,
+                'message' => 'Menu not created',
+                'details' => $e->getMessage(),
+            ], 500);
+
+        }
+
     }
 
     /**
      * @param Restaurant $restaurant
      * @param Dish       $dish
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function destroy(Restaurant $restaurant, Dish $dish): \Illuminate\Http\JsonResponse
+    public function destroy(Restaurant $restaurant, Dish $dish): JsonResponse
     {
         Gate::authorize('deleteDishes', [$restaurant, $dish]);
 
