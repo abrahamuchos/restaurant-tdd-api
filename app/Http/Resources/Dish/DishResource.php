@@ -13,6 +13,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string                           $name
  * @property string|null                      $description
  * @property float                            $price
+ * @property string|null                      $image
+ * @property string|null                      $image_path
  * @property bool                             $is_available
  * @property \Illuminate\Support\Carbon|null  $created_at
  * @property \Illuminate\Support\Carbon|null  $updated_at
@@ -35,6 +37,7 @@ class DishResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'isAvailable' => $this->is_available,
+            'image' => $this->image,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
             'links' => [

@@ -25,6 +25,8 @@ class DishFactory extends Factory
             'description' => fake()->text(100),
             'price' => fake()->randomFloat(2, 1, 100),
             'is_available' => random_int(0, 1),
+            'image' => 'image.png',
+            'image_path'=> 'path/to/image.png',
         ];
     }
 }

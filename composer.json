@@ -10,7 +10,8 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "spatie/laravel-permission": "^6.10",
-        "tymon/jwt-auth": "*"
+        "tymon/jwt-auth": "*",
+        "ext-gd": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.1",

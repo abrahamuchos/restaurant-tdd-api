@@ -46,7 +46,7 @@ class GenerateQrJob implements ShouldQueue
 
         } catch (EmptyTextException $e) {
             Log::error(
-                'Message: {message}  | File: {file} | Line: {line} | Database rollback transaction',
+                'Message: {message}  | File: {file} | Line: {line} | Job Error (GenerateQR)',
                 [
                     'message' => $e->getMessage(),
                     'file' => $e->getFile(),

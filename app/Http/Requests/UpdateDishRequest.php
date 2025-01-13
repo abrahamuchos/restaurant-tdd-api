@@ -10,6 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string                           $name
  * @property string|null                      $description
  * @property float                            $price
+ * @property string|null                      $image
  * @property bool                             $isAvailable
  * @property-read \App\Models\Restaurant|null $restaurant
  */
@@ -36,6 +37,7 @@ class UpdateDishRequest extends FormRequest
                 'name' => 'required|string|max:65',
                 'description' => 'nullable|string|max:100',
                 'price' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0.01',
+                'image' => 'nullable|string',
                 'isAvailable' => 'required|boolean',
             ];
 
@@ -45,6 +47,7 @@ class UpdateDishRequest extends FormRequest
                 'name' => 'sometimes|string|max:65',
                 'description' => 'sometimes|nullable|string|max:100',
                 'price' => 'sometimes|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0.01',
+                'image' => 'sometimes|nullable|string',
                 'isAvailable' => 'sometimes|boolean',
             ];
         }
@@ -52,13 +55,13 @@ class UpdateDishRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        if($this->restaurantId){
+        if ($this->restaurantId) {
             $this->merge([
                 'restaurant_id' => $this->restaurantId,
             ]);
         }
 
-        if($this->isAvailable){
+        if ($this->isAvailable) {
             $this->merge([
                 'is_available' => $this->isAvailable,
             ]);

@@ -49,6 +49,7 @@ class ShowDishTest extends TestCase
                 'name',
                 'description',
                 'price',
+                'image',
                 'isAvailable',
                 'createdAt',
                 'updatedAt',
