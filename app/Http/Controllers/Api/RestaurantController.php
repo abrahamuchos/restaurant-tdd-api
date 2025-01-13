@@ -40,8 +40,10 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request): RestaurantResource
     {
+        $user = \Auth::user();
+
         $restaurant = Restaurant::create([
-            'user_id' => $request->userId,
+            'user_id' => $user->id,
             'code' => $request->code,
             'name' => $request->name,
             'description' => $request->description,
