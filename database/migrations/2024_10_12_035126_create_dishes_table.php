@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
             $table->string('name', 65);
             $table->string('description', 100)->nullable();
+            $table->string('image',255)->nullable();
+            $table->string('image_path', 255)->nullable();
             $table->float('price');
             $table->boolean('is_available')->default(true);
 

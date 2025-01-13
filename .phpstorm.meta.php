@@ -2378,10 +2378,10 @@ namespace PHPSTORM_META {
 'tinker.alias','tinker.dont_alias',);
         registerArgumentsSet('middleware', 
 'web','api',);
-        registerArgumentsSet('routes', 'restaurants.index','restaurants.store',
-'restaurants.show','restaurants.update','restaurants.destroy','restaurants.dishes.index','restaurants.dishes.store',
-'restaurants.dishes.show','restaurants.dishes.update','restaurants.dishes.destroy','restaurants.menus.index','restaurants.menus.store',
-'restaurants.menus.show','restaurants.menus.update','restaurants.menus.destroy','public.menus.show',);
+        registerArgumentsSet('routes', 'restaurants.index',
+'restaurants.store','restaurants.show','restaurants.update','restaurants.destroy','restaurants.dishes.index',
+'restaurants.dishes.store','restaurants.dishes.show','restaurants.dishes.update','restaurants.dishes.destroy','restaurants.menus.index',
+'restaurants.menus.store','restaurants.menus.show','restaurants.menus.update','restaurants.menus.destroy','public.menus.show',);
         registerArgumentsSet('views', 
 'welcome','laravel-exceptions-renderer::components.card','laravel-exceptions-renderer::components.context','laravel-exceptions-renderer::components.editor','laravel-exceptions-renderer::components.header',
 'laravel-exceptions-renderer::components.icons.chevron-down','laravel-exceptions-renderer::components.icons.chevron-up','laravel-exceptions-renderer::components.icons.computer-desktop','laravel-exceptions-renderer::components.icons.moon','laravel-exceptions-renderer::components.icons.sun',

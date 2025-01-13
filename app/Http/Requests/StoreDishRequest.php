@@ -10,6 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string                           $name
  * @property string|null                      $description
  * @property float                            $price
+ * @property string|null                      $image
  * @property bool                             $is_available
  * @property \Illuminate\Support\Carbon|null  $created_at
  * @property \Illuminate\Support\Carbon|null  $updated_at
@@ -37,6 +38,7 @@ class StoreDishRequest extends FormRequest
             'name' => 'required|string|max:65',
             'description' => 'nullable|string|max:100',
             'price' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0.01',
+            'image' => 'nullable|string',
             'isAvailable' => 'required|boolean',
         ];
     }

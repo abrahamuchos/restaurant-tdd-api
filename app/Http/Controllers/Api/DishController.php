@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Base64Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDishRequest;
 use App\Http\Requests\UpdateDishRequest;
@@ -11,7 +12,9 @@ use App\Models\Restaurant;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class DishController extends Controller
 {
@@ -24,8 +27,8 @@ class DishController extends Controller
     public function index(Restaurant $restaurant, Request $request): AnonymousResourceCollection
     {
         $request->validate([
-          'perPage' => 'nullable|integer|min:1|max:100',
-          'page' => 'nullable|integer|min:1',
+            'perPage' => 'nullable|integer|min:1|max:100',
+            'page' => 'nullable|integer|min:1',
         ]);
 
         $dishes = $restaurant
@@ -42,17 +45,43 @@ class DishController extends Controller
      * @param StoreDishRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     * @throws \Throwable
      */
     public function store(Restaurant $restaurant, StoreDishRequest $request): \Illuminate\Http\JsonResponse
     {
-        Dish::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'restaurant_id' => $restaurant->id,
-        ]);
+        DB::beginTransaction();
 
-        return response()->json([], 201);
+        try{
+            if ($request->image) {
+                list($data, $extension) = Base64Helper::getDataImage($request->image);
+                $filename = uniqid() . '.' . $extension;
+                $path = 'restaurants/' . $restaurant->id . '/dishes/' . $filename;
+                Storage::disk('public')->put($path, $data);
+            }
+
+            Dish::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'restaurant_id' => $restaurant->id,
+                'image' => $filename ?? null,
+                'image_path' => $path ?? null,
+            ]);
+            DB::commit();
+
+            return response()->json([], 201);
+
+        }catch (\Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'error' => true,
+                'code' => 5050,
+                'message' => 'Menu not created',
+                'details' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

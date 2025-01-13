@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 
 /**
- *
+ * 
  *
  * @property int                                                                  $id
  * @property int                                                                  $restaurant_id
@@ -35,6 +35,8 @@ use Illuminate\Support\Facades\Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant search($search = '')
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant sort($sortBy = '', $sortDirection = '')
+ * @property string|null $qr
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereQr($value)
  * @mixin \Eloquent
  */
 class Menu extends Model

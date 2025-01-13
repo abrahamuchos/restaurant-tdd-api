@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string                                                               $name
  * @property string|null                                                          $description
  * @property float                                                                $price
+ * @property string|null                                                          $image
+ * @property string|null                                                          $image_path
  * @property bool                                                                 $is_available
  * @property \Illuminate\Support\Carbon|null                                      $created_at
  * @property \Illuminate\Support\Carbon|null                                      $updated_at
@@ -37,6 +39,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int|null                                                        $menus_count
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant search($search = '')
  * @method static \Illuminate\Database\Eloquent\Builder|Restaurant sort($sortBy = '', $sortDirection = '')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Dish whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Dish whereImagePath($value)
  * @mixin \Eloquent
  */
 class Dish extends Model
@@ -48,6 +52,8 @@ class Dish extends Model
         'name',
         'description',
         'price',
+        'image',
+        'image_path',
         'is_available',
     ];
 
