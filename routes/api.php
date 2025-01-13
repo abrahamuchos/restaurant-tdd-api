@@ -35,6 +35,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::middleware('can:view,restaurant')
         ->as('restaurants.')
             ->prefix('restaurants/{restaurant:id}')
+            ->scopeBindings()
             ->group(function () {
                 //Dishes
                 Route::apiResource('dishes', DishController::class);
