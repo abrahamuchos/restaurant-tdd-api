@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Restaurant;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * @property int         $id
@@ -38,12 +39,11 @@ class UpdateRestaurantRequest extends FormRequest
     {
         if($this->method() === 'PUT'){
             return [
-                'userId' => 'required|exists:users,id',
-                'code' => 'required|string|max:255|unique:restaurants',
+                'code' => ['required', 'string', 'max:255', Rule::unique('restaurants')->ignore($this->restaurant->id)],
                 'name' => 'required|string|max:65',
                 'address' => 'required|string|max:255',
                 'phone' => 'required|string|max:65',
-                'email' => 'required|string|email|max:255|unique:restaurants',
+                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('restaurants')->ignore($this->restaurant->id)],
                 'description' => 'required|string|max:255',
                 'openingHour' => 'required|date_format:H:i',
                 'closingHour' => 'required|date_format:H:i|after:openingHour',
@@ -54,12 +54,11 @@ class UpdateRestaurantRequest extends FormRequest
 
         }else{
             return [
-                'userId' => 'sometimes|exists:users,id',
-                'code' => 'sometimes|string|max:255|unique:restaurants',
+                'code' => ['sometimes', 'string', 'max:255', Rule::unique('restaurants')->ignore($this->restaurant->id)],
                 'name' => 'sometimes|string|max:65',
                 'address' => 'sometimes|string|max:255',
                 'phone' => 'sometimes|string|max:65',
-                'email' => 'sometimes|string|email|max:255|unique:restaurants',
+                'email' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('restaurants')->ignore($this->restaurant->id)],
                 'description' => 'sometimes|nullable|string|max:255',
                 'openingHour' => 'sometimes|date_format:H:i',
                 'closingHour' => 'sometimes|date_format:H:i|after:openingHour',
