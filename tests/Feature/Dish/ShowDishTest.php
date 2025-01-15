@@ -1,0 +1,124 @@
+<?php
+
+namespace Tests\Feature\Dish;
+
+use App\Models\Dish;
+use App\Models\Restaurant;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class ShowDishTest extends TestCase
+{
+
+    use RefreshDatabase;
+
+    protected Dish $dish;
+    protected Restaurant $restaurant;
+    protected \App\Models\User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->dish = Dish::factory()->create();
+        $this->restaurant = $this->dish->restaurant;
+        $this->user = $this->restaurant->user;
+    }
+
+    public function test_authenticated_user_can_see_a_dish_of_his_restaurant()
+    {
+        $response = $this->apiAs(
+            $this->user,
+            'get',
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}"
+        );
+
+        $response->assertStatus(200);
+        $response->assertJsonPath(
+            'data.links.self',
+            route('restaurants.dishes.show', [$this->restaurant->id, $this->dish->id])
+        );
+        $response->assertJsonPath(
+            'data.links.parent',
+            route('restaurants.show', $this->restaurant->id)
+        );
+        $response->assertJsonStructure([
+            'data' => [
+                'type',
+                'id',
+                'name',
+                'description',
+                'price',
+                'image',
+                'isAvailable',
+                'createdAt',
+                'updatedAt',
+                'links',
+                'relationships' => [
+                    'restaurant',
+                    'menus'
+                ]
+            ],
+        ]);
+    }
+
+    public function test_authenticated_user_cannot_see_a_dish_of_another_restaurant()
+    {
+        $otherRestaurant = Restaurant::factory()->create();
+
+        $response = $this->apiAs(
+            $this->user,
+            'get',
+            "$this->apiBase/restaurants/{$otherRestaurant->id}/dishes/{$this->dish->id}"
+        );
+
+        $response->assertStatus(403);
+    }
+
+    public function test_authenticated_user_cannot_see_a_dish_of_another_user()
+    {
+        $plate = Dish::factory()->create();
+
+        $response = $this->apiAs(
+            $this->user,
+            'get',
+            "$this->apiBase/restaurants/{$plate->restaurant->id}/dishes/{$plate->id}"
+        );
+
+        $response->assertStatus(403);
+    }
+
+    public function test_unauthenticated_user_cannot_see_a_dish_of_a_restaurant()
+    {
+        $response = $this->getJson("$this->apiBase/restaurants/{$this->restaurant->id}/dishes/{$this->dish->id}");
+
+        $response->assertStatus(401);
+    }
+
+    public function test_authenticated_user_cannot_see_a_dish_that_does_not_exist()
+    {
+        $dishId = 9999;
+
+        $response = $this->apiAs(
+            $this->user,
+            'get',
+            "$this->apiBase/restaurants/{$this->restaurant->id}/dishes/$dishId"
+        );
+
+        $response->assertStatus(404);
+    }
+
+    public function test_authenticated_user_cannot_see_a_dish_of_a_restaurant_that_does_not_exist()
+    {
+        $restaurantId = 9999;
+
+        $response = $this->apiAs(
+            $this->user,
+            'get',
+            "$this->apiBase/$restaurantId/dishes/{$this->dish->id}"
+        );
+
+        $response->assertStatus(404);
+    }
+
+}

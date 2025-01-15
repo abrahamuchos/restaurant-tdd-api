@@ -43,6 +43,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'public-qr' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/qr'),
+            'url' => env('APP_URL').'/storage/qr',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',
@@ -71,6 +78,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('qr') => storage_path('app/public/qr'),
     ],
 
 ];

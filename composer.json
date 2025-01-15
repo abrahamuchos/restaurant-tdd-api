@@ -6,8 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "giauphan/laravel-qr-code": "^1.0",
         "laravel/framework": "^11.9",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "spatie/laravel-permission": "^6.10",
+        "tymon/jwt-auth": "*",
+        "ext-gd": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.1",
